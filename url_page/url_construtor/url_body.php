@@ -1,0 +1,163 @@
+<?php
+
+require_once("function_php/url_mysql.php");
+
+class url_body extends __root_mysql{
+
+
+public $html_body, $cont_start,  $cont_end, $nav_start, $nav_end;
+public $cont_contenu, $search, $require_url , $_connexion; 
+public $url_mysql; 
+
+public function __construct()
+{
+    /*
+    html_body constuire l'ensemble de la page 
+    */ 
+
+
+            $this->html_body=$this->modal();
+            $this->html_body.='<body class="" token="">';
+            $this->html_body.='<div class="container-lg  p-3 mb-5 bg-body-tertiary rounded">';
+            $this->html_body.=$this->bar_progress_info();
+            $this->html_body.=$this->mail_recrute();
+            $this->html_body.=$this->body();
+            $this->html_body.=$this->letter();
+            $this->html_body.='</div>';
+            $this->html_body.='</body>';
+ 
+}
+
+public function body(){
+
+}
+public function modal(){
+
+    $modal ='<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+
+      </div>
+    </div>
+  </div>'; 
+  return $modal; 
+
+
+}
+public function bar_progress_info(){
+$progress_bar ="<div class='text text-center'> <h4> RESUME HAROUNA Harouna </h4></div>";
+$progress_bar .= '<div class="progress mb-5 mt-5" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px; width: 100%;">
+<div class="progress-bar" style="width: 25%"></div>
+</div>
+';
+ return $progress_bar; 
+}
+
+public function letter(){
+  
+
+ $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+ // $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+  
+     
+      $prepare = "SELECT * FROM info_letter";
+      $select_array =array();
+      $select_letter =$this->__select($prepare,$select_array,false,$dbh);
+  
+    $_letter = '<div class="container shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+    ';
+    $_letter .= '<div class="row">';
+    $_letter .= '<div class="col m-2 bg-dark text text-light rounded">';
+    $_letter .= '<div class="text text-light"><h6> Date Publication : '.$select_letter['date_letter'].'</h6></div>';
+    $_letter .= $select_letter['name_letter'];
+    $_letter .= '</div>';
+    $_letter .= '<div class="col-sm border-start border-dark p-2"> 
+    <div class="container"> 
+    <div class="row"> 
+    <div class="col"> 
+    <img src="img/myself" class="rounded border border-dark " alt="..."
+     style="width:300px;height:400px;"> </div>';
+    
+     $_letter .= '<div class="col"> '.$this->information_().'</div> </div>';
+     $_letter .= '</div> ';
+     $_letter .= '</div></div> </div>';
+   
+
+ return $_letter; 
+
+
+}
+public function information_(){
+   
+   
+
+$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+ //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+
+   
+    $prepare = "SELECT * FROM info_harouna";
+    $select_array =array();
+    $select_info =$this->__select($prepare,$select_array,false,$dbh);
+
+    $information =  "<h4>".$select_info["info_name"]; 
+    $information .=  " ".$select_info["info_frist_name"]."</h4> </br>"; 
+    $information .=  "Birth      : ".$select_info["info_date_brith"]."</br>"; 
+    $information .=  "E-mail     : <a href='mailto:'".$select_info["info_mail"]."'?subject=Recreteur:'>".$select_info["info_mail"]."</a></br>"; 
+    $information .=  "location   : ".$select_info["info_adresse"]."</br>"; 
+    $information .=  "Pays       : ".$select_info["info_pays"]."</br>"; 
+    $information .=  "Color      : ".$select_info["info_Rase"]."</br>"; 
+    $information .=  "Creat date : ".$select_info["date_info"]."</br>"; 
+
+    return $information; 
+
+}
+
+public function mail_recrute(){
+
+    $_form_recrute ='<div class="container">'; 
+    $_form_recrute .='<div class="row">'; 
+    $_form_recrute .='<div class="col">'; 
+    $_form_recrute .= '<div class="input-group mb-3 shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+    <div class="input-group">
+    
+    <input type="text" aria-label="First name" placeholder="Recrute@exemple.com"  class="form-control mail">
+    <input type="text" aria-label="Last name" placeholder="Compagny"  class="form-control compagny">
+    <button class="btn btn-primary btn-info-recrute" > Valider  <i class="fa-solid fa-check"></i></button>
+
+    </div>
+  <div class="alert-company"></div>
+    </div> </div>';
+
+    $_form_recrute .='<div class="col border-start shadow-sm mb-2 bg-dark p-2 text-light rounded">'.$this->alert_recruteur().'</div> '; 
+    $_form_recrute .='</div>'; 
+
+//<button class="btn btn-primary btn-info-recrute" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Valider  <i class="fa-solid fa-check"></i></button>
+
+
+return $_form_recrute; 
+
+}
+
+public function alert_recruteur(){
+
+  $_info_recruteur="<div class=''><h5 class='text text-center text-light'>Information Web browser</h5> </div> ";
+  $_info_recruteur.="<div class=''>Navigator : ".$_SERVER['HTTP_USER_AGENT']."</div> <hr>";
+  $_info_recruteur.="<div class=''>MyIP : ".$_SERVER['REMOTE_ADDR']."</div>";
+  $_info_recruteur.="<div class=''></div>";
+  $_info_recruteur.="<div class=''></div>";
+  $_info_recruteur.="<div class=''></div>";
+ 
+return $_info_recruteur;
+}
+
+
+}
+
+
+
+
+
+
+
+?>
