@@ -371,13 +371,15 @@ var fun_resume = {
          dataType:"json", 
          data: {comment_val:comment__val,id_recrute:id__recrute,url:_url},  
          success: function(resultat) {
-          if(resultat["resultat"]==true){
-            $(".alert-reload-code").html("reload code success").addClass("alert-access form-controle")
-             $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right></i>').addClass("alert-primary")
+          if(resultat["Error"]==0){
+            $("div.alert-comment").html(resultat['contenu']).addClass("alert-danger rounded shadow-sm mt-2 p-2 text text-black form-controle")
+             $(b_this).html('Confirme comment <i class="fa-solid fa-rotate-right></i>').addClass("btn-danger")
             }else{
-            $(".alert-reload-code").html("reload code success").addClass("alert-danger")
-            $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right></i>').addClass("alert-danger").removeClass("btn-primary")
-            }
+            $("div.return_comment").html(resultat['r']).addClass("alert alert-success mt-3 p-2 text text-black")
+            $(b_this).html('confirme comment <i class="fa-solid fa-rotate-right></i>').addClass("btn btn-primary ").removeClass("btn-danger")
+            $("div.alert-comment").html("resultat['contenu']").removeClass("alert-danger rounded shadow-sm mt-2 p-2 text text-black form-controle")
+            
+          }
         }
  
      })
@@ -411,11 +413,10 @@ $(document).on("click",".btn-info-recrute", function(){
     var f_cc= $("input.cc").val()
     var f_in = $("input.in").val()
       fun_resume.confirme_code(f_form,f_id_tccin ,f_t,f_cc,f_in,this_btn); 
-
     })
 
 
-    $(document).on("click","button.btn-info-r-close", function(){
+      $(document).on("click","button.btn-info-r-close", function(){
 
       $("button.btn-info-recrute").html(' Valider  <i class="fa-solid fa-check"></i>')
       $("input.compagny").removeAttr("disabled")
@@ -424,23 +425,23 @@ $(document).on("click",".btn-info-recrute", function(){
 
       $(document).on("click","button.reload-code", function(){
 
-        var btn_this = $(this)
-        var btn_form_id= $(this).attr("form_id")
-        $("button.btn-info-recrute").html(' Valider  <i class="fa-solid fa-check"></i>')
-        fun_resume.reload_code(btn_form_id,btn_this)
-        })
+      var btn_this = $(this)
+      var btn_form_id= $(this).attr("form_id")
+      $("button.btn-info-recrute").html(' Valider  <i class="fa-solid fa-check"></i>')
+      fun_resume.reload_code(btn_form_id,btn_this)
+      })
 
 
-        $(document).on("click","button.confirme_comment", function(){
-         alert("comment")
-          var btn_this = $(this)
-          var comment_val= $("textarea.comment_textarea").val()
-          var id_recrute= $(this).attr('id_company')
-          var url= $(this).attr('url')
+      $(document).on("click","button.confirme_comment", function(){
 
-          fun_resume.confirme_comment(btn_this,comment_val,id_recrute,url )
-          })
-    
+      var btn_this = $(this)
+      var comment_val= $("textarea.comment_textarea").val()
+      var id_recrute= $(this).attr('id_company')
+      var url= $(this).attr('url')
+
+      fun_resume.confirme_comment(btn_this,comment_val,id_recrute,url)
+      })
+
 
      /* 
       $(document).on("click","button.btn-info-r-close", function(){

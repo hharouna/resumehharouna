@@ -79,7 +79,7 @@ $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND se
     $select_array =array(":url_link"=>$__url_sept);
     $this->sept_detail=$this->__select($prepare,$select_array,false,$dbh);  
     $this->url_sept= $this->sept_detail;
-            $sept_contenu= '<div class="text-link"> <h5>'.$this->url_sept['url_sept'].' : '.$this->url_sept['title_sept'].' </h5> </div></br></hr>'; 
+            $sept_contenu= '<div class="text-link"> <h5>'.$this->url_sept['url_sept'].' : '.$this->url_sept['title_sept'].' </h5>  <i class="fa-brands fa-github fa-lg"></i> link : <a class="" href="https://github.com/hharouna/resumehharouna.git" >   https://github.com/hharouna/resumehharouna.git </a></div></br></hr>'; 
             $sept_contenu.= "<div class='container bg-light rounded shadow-sm  p-2 '>
             <div class='row'>"; 
             $sept_contenu.= "<div class='col-12  col-sm-6 col-md-8 col-lg-8 text-black p-2'>"; 

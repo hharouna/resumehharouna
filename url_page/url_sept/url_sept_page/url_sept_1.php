@@ -91,14 +91,16 @@ public function next_sept($url_sept){
  
  public function commentaire_ckeditor($url_sept){
  
-    $next_comment = '<hr><div class="container-lg bg-light mt-3 shadow-sm rounded p-2 ">';
+    $next_comment = '<hr > <div class="return_comment">';
+    $next_comment .= '</div>';
+    $next_comment .= '<hr><div class="container-lg bg-light mt-3 shadow-sm rounded p-2 ">';
     $next_comment .='<div class="form-floating">
     <span class="text text-dark"> <h4>Would you like me to improve my skills </h4></span>
     <textarea class="form-control comment_textarea" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
     </div>
     <hr>
-    <button class="btn btn-primary confirme_comment" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme </button>
-   
+    <button class="btn btn-primary confirme_comment" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme  comment</button>
+    <div class="alert-comment"></div>
 
     ';
     $next_comment .='</div> <hr>';

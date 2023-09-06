@@ -10,149 +10,92 @@
 extract($_POST);
 require_once("../../function_php/private_connect/root_mail_sms.php");
 require_once("../../function_php/url_mysql.php");
+require_once("../../function_php/f_session/f_session.php");
 
 class url_confirme_comment extends __root_mysql{
 
-    public $_mail_recrutor,$_user,$_info_compagny, $array_c, $resultat_c,$_ip, $select_info,$T,$CC,$IN, $array_tccin , $resultat_tccin, $select_tccin; 
+    public $_mail_recrutor,$_id_recrute,$_sept_url,$_comment, $_user, $array_c, $_ip, $array_comment, $resultat_c, $select_comment; 
 
     public function __construct($comment,$id_recrute, $sept_url)
     {
-        $this->_mail_recrutor = $recrutor_mail; 
-        $this->_info_compagny = $compagny; 
+       
+        $this->_id_recrute = $id_recrute;
+        $this->_sept_url= $sept_url;
+        $this->_comment = $comment;
         $this->_user= $_SERVER['HTTP_USER_AGENT'];
         $this->_ip = $_SERVER['REMOTE_ADDR'];
+
+
     }
 
- public function recrutor_controle(){
+ public function step_controle($comment,$id_recrute, $sept_url){
 
-  //  require_once("../../private/private_resume.php");
-//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
    
-    $prepare = "SELECT * FROM info_recrute WHERE info_email=:info_email";
+$rs_id_comment =$this->confirme_comment($comment,$id_recrute, $sept_url,$dbh); 
 
-    $select_array =array(":info_email"=>$this->_mail_recrutor);
-    $this->select_info =$this->__select($prepare,$select_array,false,$dbh);  
-    $_rst = $this->select_info;
+$prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment";
 
-   if($_rst["info_email"]== $this->_mail_recrutor && $_rst["info_active"]==0 ): 
+    $select_array =array(":id_r_comment"=>$id_recrute);
+    $this->select_comment=$this->__select($prepare,$select_array,true,$dbh);  
+    $_rst = $this->select_comment;
+    $r_page ="<div class='container '>"; 
+    $r_page .="<div class='row p-4 '>"; 
+    $r_page .="<div class='col-12 bg-dark text text-light rounded shadow-sm p-2 mt-2 mb-2 '> <i class='fa-solid fa-heart fa-lg'style='color: #da0e13;'></i> Thanks for your participating ".$_SESSION['info_recrute']['info_company_recrute']."</div>"; 
+    foreach($_rst['fectAll'] as $rs_fe => $_fecthAll){
+        $r_page .= "<div class='form-control shadow-sm bg-light mt-2 pt-2 pb-2 rounded ' comment_id='".$_fecthAll["id_comment"]."' >"; 
+        $r_page .= $_fecthAll["sept_comment"];
+        $r_page .= " <br><span class='text text-secondary  text-sm'>  date : ".$_fecthAll['date_commentaire']." </span>";
+        $r_page .= "</div>";
+      }
+      $r_page .="</div> </div>"; 
 
-    $this->select_confirme_code($dbh,$_rst["id_recrute"]); 
-    return array("r_id"=>base64_encode($_rst["id_recrute"]),
-    "r_tccin"=>base64_encode($this->select_confirme_code($dbh,$_rst["id_recrute"])),
-    "r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]); endif; 
-    
-   if($_rst["info_email"]== $this->_mail_recrutor &&  $_rst["info_active"]==1):  
-    return array("r_id"=>$_rst["id_recrute"],"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]) ; endif;
+     return  $r_page; 
 
-   if(empty($_rst)): 
-    return $this->recrutor_insert($dbh); endif;
-
- }
- public function select_confirme_code($__db, $__id_recrute){
-    
-    $prepare = "SELECT * FROM code_t_cc_in WHERE id_recrutre_tccin=:id_recrutre_tccin";
-
-    $select_array =array(":id_recrutre_tccin"=>$__id_recrute);
-    $this->select_tccin =$this->__select($prepare,$select_array,false,$__db);  
-    $_rst = $this->select_tccin["id_tccin"];
-
-    return  $_rst;
 
  }
 
- public function confirme_comment(){
 
- }
- public function form_Confirme_email(){
+ public function confirme_comment($_comment,$_id_recrute, $_sept_url,$db){
 
-            $_confirme_email ='<div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Confirme E-mail</h1>
-            <button type="button" class="btn-close btn-info-r-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <div class="input-group">
-            <span class="input-group-text">Code :</span>
-            <input type="text" aria-label="First name"  placeholder="T: " class="form-control t">
-            <input type="text" aria-label="Last name" placeholder="CC:" class="form-control cc ">
-            <input type="text" aria-label="Last name" placeholder="In: " class="form-control in">
-            </div>
-            <div class="alert-confirme-code " > </div>
-            </div>
-            
-            <div class="modal-footer">
-            <div class="btn-group shadow-sm" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-success confirme-code btn-sm" id_tccin="'.base64_encode($this->resultat_tccin).'" form_id="'.base64_encode($this->select_info["id_recrute"]).'">Confirme code <i class="fa-solid fa-check"></i></button>
-            <button type="button" class="btn btn-primary reload-code btn-sm" id_tccin="'.base64_encode($this->resultat_tccin).'"  form_id="'.base64_encode($this->select_info["id_recrute"]).'"> Relaod code <i class="fa-solid fa-rotate-right"></i></button>
-            </div>
-            
-            </div>
-            <div class="alert-reload-code"> </div>
-            </div>';
-    return $_confirme_email;
- }
- public function recrutor_insert($__db){
+      /* insertion des information company  */
+      $this->array_comment = array(":id_r_comment"=>$_id_recrute,
+      ":id_sept_comment"=>$_sept_url,":sept_comment"=>$_comment); 
+       
+      $prepare = "INSERT INTO sept_commentaire(id_r_comment,id_sept_comment,sept_comment) 
+      VALUES (:id_r_comment,:id_sept_comment,:sept_comment)";
+      $this->resultat_c= $this->__insert($prepare,$this->array_comment,$db); 
 
-    /* insertion des information company  */
-    $this->array_c = array(":info_email"=>$this->_mail_recrutor,
-    ":ip_recrute"=>$this->_ip,
-    ":user_html"=>$this->_user,
-    ":info_company_recrute"=>$this->_info_compagny); 
-     
-    $prepare = "INSERT INTO info_recrute(info_email,ip_recrute,user_html,info_company_recrute) 
-    VALUES (:info_email,:ip_recrute,:user_html,:info_company_recrute)";
-    $this->resultat_c= $this->__insert($prepare,$this->array_c,$__db); 
-
-/* insertion des information company  */
+      /* insertion des information company  */
     sleep(2);  
 
-    $this->T  =rand(100000,200000);
-    $this->CC =rand(458525,825632);
-    $this->IN =base64_encode($this->resultat_c);
+    return $this->resultat_c; 
+
+ }
+
+
  
-    $this->array_tccin = array(":id_recrutre_tccin"=>$this->resultat_c,":c_t"=>$this->T,
-    ":c_cc"=>$this->CC,":c_in"=>$this->IN); 
-  
-    $prepare_tccin = "INSERT INTO code_t_cc_in(id_recrutre_tccin,c_t,c_cc,c_in) 
-    VALUES (:id_recrutre_tccin,:c_t,:c_cc,:c_in)";
-    $this->resultat_tccin= $this->__insert($prepare_tccin,$this->array_tccin,$__db); 
-    
-    /*recuperation des informations recruteur */
-    $prepare = "SELECT * FROM info_recrute WHERE id_recrute=:id_recrute ";
-    $select_array =array(":id_recrute"=>$this->resultat_c);
-    $this->select_info =$this->__select($prepare,$select_array,false,$__db);  
-    $_rst = $this->select_info;
-   
-    $_send_mail = new root_mail_sms();
-    $_message  = "<h3> Hello, ".$_rst["info_company_recrute"]." </h3> </br>  <hr>";
-    $_message .= "<h4> Information Resume : T , CC , In  </h4> </br> <hr>";
-    $_message .="T  : ".$this->T." , </br> </hr>";
-    $_message .="CC : ".$this->CC." , </br> </hr>";
-    $_message .="IN : ".$this->IN."</br> </hr>";
-
-    
-   
-
-    //$contenumail,$pmail,$pform,$psujet,$ptitle,$piedpage, $pdonnearray, $commentmail
-    $_array_donne = array("r_id"=>base64_encode($_rst["id_recrute"])  ,"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]);
-    $info_compagny = $_rst['info_company_recrute'] ;
-    return $_send_mail->cssmail($_message,$_rst["info_email"],"hharouna@resumehharouna.net","T, CC , IN $info_compagny  by Harouna Harouna", "","resumehharouna.net",$_array_donne,"");
-
-}
 }
 
+/*
+"
 
-
-
-$_array_preg = array($email, $compagny);
+	
+comment_val	""
+id_recrute	"Mzk="
+url	"url_sept_1"
+"
+*/
+$_array_preg = array($comment_val, $id_recrute, $url_sept_1);
 $_count_preg = count($_array_empty);
 
 for($i = 0; $i<=$_count_preg-1; $i++){
           $_array_preg[$i]= preg_replace('#[^a-zA-z0-9=@._-]#i','', $_array_preg[$i]);
 }
 
-    $_array_empty = array($email, $compagny);
-    $value = array("E-mail !!!","The Name Company !!!");
+    $_array_empty = array($comment_val);
+    $value = array("Comment!!!");
     $_count_array = count($_array_empty);
 
 for($i = 0; $i<=$_count_array-1; $i++){
@@ -162,19 +105,15 @@ for($i = 0; $i<=$_count_array-1; $i++){
             endif;
 }
 
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)): 
-    echo json_encode(array("contenu"=>"Adresse E-mail incorrect !!!","Error"=>0)); exit(); 
-    endif; 
-
-
-    $controle_insert_compagny = new url_c_insert_recrutor($email, $compagny); 
+    $session = new f_session();
+    $session->session("hharouna",false,$_SERVER['SERVER_NAME']);
+    $url_confirme_comment = new url_confirme_comment($id_recrute,$url,$comment_val);
 
     // resultat des donnees    
-    $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle(), 
-    "email"=>$controle_insert_compagny->_mail_recrutor,"form_tccin"=>$controle_insert_compagny->form_Confirme_email()); 
+    $_resultat = array('resultat'=> true, "r"=>$url_confirme_comment->step_controle($comment_val,$id_recrute,$url)); 
 
 
-    if(isset($email)&& isset($compagny)):
+    if(isset($comment_val)&& isset($id_recrute)&& isset($url)):
     echo json_encode($_resultat); 
     else:
     header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
