@@ -15,7 +15,7 @@ class url_confirme_comment extends __root_mysql{
 
     public $_mail_recrutor,$_user,$_info_compagny, $array_c, $resultat_c,$_ip, $select_info,$T,$CC,$IN, $array_tccin , $resultat_tccin, $select_tccin; 
 
-    public function __construct($recrutor_mail, $compagny)
+    public function __construct($comment,$id_recrute, $sept_url)
     {
         $this->_mail_recrutor = $recrutor_mail; 
         $this->_info_compagny = $compagny; 
@@ -62,7 +62,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
  }
 
  public function confirme_comment(){
-    
+
  }
  public function form_Confirme_email(){
 
