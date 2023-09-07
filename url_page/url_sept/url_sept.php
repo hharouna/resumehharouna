@@ -122,7 +122,7 @@ if(isset($url_sept)):
    require_once("url_sept_function.php");
  $url_html_sept = new url_sept_page(); 
  $url_sept_function = new url_sept_function($url_sept);
- $url_sept_page.= $url_sept_function->sept_progress();
+ $url_sept_page.= $url_sept_function->sept_progress($_SESSION['info_recrute']['id_recrute'],$url_sept);
  $url_sept_page.= '<div class="container-lg shadow-sm rounded bg-light text-light p-2 mb-5" style ="margin-top:100px;  ">';
  $url_sept_page.=  $url_sept_function->html_sept($url_sept);//initialisation du contenu sept 
  $url_sept_page.=  $url_html_sept->url_sept_html($url_sept);// initialition du contenu url_sep_N

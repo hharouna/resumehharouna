@@ -30,7 +30,7 @@ class url_head{
       $this->_url_head.=$this->js;
       $this->_url_head.=$this->css;
       $this->_url_head.=$this->meta;
-      $this->_url_head.="<title></title>"  ;
+      $this->_url_head.="<title>Resume Harouna HAROUNA</title>"  ;
       $this->_url_head.="</head>" ;  
 
   }
@@ -71,9 +71,10 @@ class url_head{
  
   public function _url_css($URL_HOST)
   {
-   $_CSS ='<link rel="stylesheet" href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/css/css/dist/css/bootstrap.css">';
+    $_CSS ='<link rel="stylesheet" href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/css/css/dist/css/bootstrap.css">';
     $_CSS .='<link rel="stylesheet" href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/css/font/css/all.css">';
-    $_CSS .='<link rel="icon" type="image/png" id="favicon"  href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/logo_prendall/icon.png"/>';
+    $_CSS .='<link class="rounded bg-dark" rel="icon" type="image/png" id="favicon"  href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/url_page/image/myself.png"/>';
+    $_CSS .='<link rel="apple-touch-icon" href="img/myself">';
     return $_CSS;
 
   }

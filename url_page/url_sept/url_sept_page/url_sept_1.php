@@ -9,7 +9,7 @@ class url_sept_page extends __root_mysql{
 
     public $_html; 
 
-  public $type_cat;
+  public $type_cat, $select_comment;
     public function __construct()
     {
         
@@ -92,6 +92,7 @@ public function next_sept($url_sept){
  public function commentaire_ckeditor($url_sept){
  
     $next_comment = '<hr > <div class="return_comment">';
+    $next_comment .= $this->affiche_comment($url_sept);
     $next_comment .= '</div>';
     $next_comment .= '<hr><div class="container-lg bg-light mt-3 shadow-sm rounded p-2 ">';
     $next_comment .='<div class="form-floating">
@@ -107,6 +108,33 @@ public function next_sept($url_sept){
 
     return $next_comment;
  }
+public function affiche_comment($_url_sept){
+
+
+ $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+   
+
+$prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";
+
+    $select_array =array(":id_r_comment"=>base64_encode($_SESSION['info_recrute']['id_recrute']), ":id_sept_comment"=>$_url_sept);
+    $this->select_comment=$this->__select($prepare,$select_array,true,$dbh);  
+    $_rst = $this->select_comment;
+    if(isset($_rst)):
+    $r_page ="<div class='container '>"; 
+    $r_page .="<div class='row p-4 '>"; 
+    $r_page .="<div class='col-12 bg-success text text-light rounded shadow-sm p-2 mt-2 mb-2 '> <i class='fa-solid fa-heart fa-lg'style='color: #da0e13;'></i> Thanks for your participating ".$_SESSION['info_recrute']['info_company_recrute']."</div>"; 
+    foreach($_rst['fectAll'] as $rs_fe => $_fecthAll){
+        $r_page .= "<div class='form-control shadow-sm bg-light mt-2 pt-2 pb-2 rounded ' comment_id='".$_fecthAll["id_comment"]."' >"; 
+        $r_page .= $_fecthAll["sept_comment"];
+        $r_page .= " <br><span class='text text-secondary  text-sm'>  date : ".$_fecthAll['date_commentaire']." </span>";
+        $r_page .= "</div>";
+      }
+      $r_page .="</div> </div>"; 
+
+     return  $r_page; 
+    endif;
+}
 
 }
 ?>

@@ -3,12 +3,65 @@ require_once('../../function_php/url_mysql.php');
 class url_sept_function extends __root_mysql{
 
 public $_sept_html, $sept_detail, $url_sept; 
-public $type_cat, $_html_type_cat;
+public $type_cat, $_html_type_cat,$progress_url, $progress_sept;
 public function __construct($_sept_url_N)
 {
    // return $this->sept_controle($_sept_url_N); 
 }
-public function sept_progress(){
+public function sept_progress($_id_recrute,$_link_url){
+
+    //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+    $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+
+    $prepare = "SELECT * FROM info_recrute, url_sept WHERE info_recrute.id_recrute=:id_recrute  AND info_recrute.id_recrute=url_sept.url_id_info_recrute ";    $select_array =array(":id_recrute"=>$_id_recrute);
+    $this->progress_url=$this->__select($prepare,$select_array,false,$dbh);  
+
+
+    $prepare_sept = "SELECT * FROM sept";    
+    $select_array =array();
+    $this->progress_sept=$this->__select($prepare_sept,$select_array,true,$dbh);  
+    
+    $_array_sept = array($this->progress_url["url_sept_1"],$this->progress_url["url_sept_2"],$this->progress_url["url_sept_3"],$this->progress_url["url_sept_4"],$this->progress_url["url_sept_5"]);
+    $_count_sept=count($_array_sept);
+
+      
+    //$array_sept=array();
+    foreach( $this->progress_sept['fectAll'] as $rs_fe => $_fecthAll){
+      $array_url_sept[]= array("id"=>$_fecthAll['id_sept'],"url_sept"=>$_fecthAll['url_sept'],"url_link"=>$_fecthAll['url_link'],"title_sept"=>$_fecthAll['title_sept']);
+    }
+
+       $_count_url_sept = count($array_url_sept);
+       $_affiche_progress ='<nav class="navbar  fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm ">
+       <div class="container-lg text text-light ">
+       <a class="navbar-brand" href="#">Resume Harouna HAROUNA</a>
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+       <i class="fa-solid fa-list-ul fa-sm" style="color: #ffffff;"></i>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarNav">
+
+       <ul class="navbar-nav">';
+        for($i=0;$i<=$_count_sept-1;$i++){ 
+          if($_link_url==$array_url_sept[$i]['url_link']):
+          $active= "active";
+          else:
+          $active= "";
+          endif; 
+          if($_array_sept[$i]==1): 
+          $_affiche_progress .= '<li class="nav-item text text-light">
+          <a class="nav-link '.$active.'" href="http://'.$_SERVER['HTTP_HOST'].'/sept_url/'.$array_url_sept[$i]['url_link'].'/'.base64_encode($_id_recrute).'">  
+          '.$array_url_sept[$i]['title_sept'].' </a> 
+          </li> ';
+          else:
+          $_affiche_progress .=  '<li class="nav-item">
+          <a class="nav-link" href="#"> '.$array_url_sept[$i]['title_sept'].' </a></li> ';
+          endif; 
+        }
+        $_affiche_progress .='</ul> </div> </nav>';
+
+  return $_affiche_progress ;
+
+  //  var_dump($array_sept);
+
     $progress ='<nav class="navbar fixed-top navbar-light shadow-sm bg-dark">
     <div class="container-fluid">
    
@@ -16,7 +69,7 @@ public function sept_progress(){
     <div class="row p-2">
    
     <div class="col text-center p-2 m-2 border border-dark bg-light shadow-sm rounded">
-    Sept  <i class="fa-solid fa-1"></i>
+    Sept '.$_id_recrute.' <i class="fa-solid fa-1"></i>
     <div class="progress" style="height: 1px; width:100%;">
     <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
   </div>
@@ -54,8 +107,13 @@ public function sept_progress(){
 
   </nav>' 
   ;
-  return $progress; 
-    
+ 
+
+
+
+        
+   
+   // var_dump($this->progress_url['id_recrute']); 
 }
 
 public function html_sept($_url_sept){
@@ -100,9 +158,7 @@ $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AN
 
     $select_array =array(":url_link"=>$url__sept);
     $this->type_cat=$this->__select($prepare,$select_array,true,$db);  
-   
-    
-    
+
       //function sept url_sept_N
       $this->_html_type_cat = '<div class="container-lg shadow-sm rounded bg-dark text-light mb-3 p-3" > 
       <div class="row row-cols-1 row-cols-md-3 g-3 text-black">';

@@ -35,9 +35,9 @@ $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@
    
 $rs_id_comment =$this->confirme_comment($comment,$id_recrute, $sept_url,$dbh); 
 
-$prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment";
+$prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";
 
-    $select_array =array(":id_r_comment"=>$id_recrute);
+    $select_array =array(":id_r_comment"=>$id_recrute, ":id_sept_comment"=>$sept_url);
     $this->select_comment=$this->__select($prepare,$select_array,true,$dbh);  
     $_rst = $this->select_comment;
     $r_page ="<div class='container '>"; 
