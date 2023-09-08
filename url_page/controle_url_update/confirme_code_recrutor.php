@@ -12,8 +12,8 @@ public function __construct($form__id)
 public function confirme_code($form__id,$f__t,$f__cc,$f__in){
 
 //require_once("../../private/private_resume.php"); 
-$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
  /* update active info_recrutre  
  info_recrute.info_active as recrute_active, code_t_cc_in.c_t as f_t, code_t_cc_in.c_cc as f_cc, code_t_cc_in.c_in as f_in*/

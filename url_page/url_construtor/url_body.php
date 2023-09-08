@@ -17,7 +17,8 @@ public function __construct()
 
 
             $this->html_body=$this->modal();
-            $this->html_body.='<body class="" token="">';
+            $this->html_body.=$this->style_background();
+            $this->html_body.='<body class="" token=""  >';
             $this->html_body.='<div class="container-lg  p-3 mb-5 bg-body-tertiary rounded">';
             $this->html_body.=$this->bar_progress_info();
             $this->html_body.=$this->mail_recrute();
@@ -29,6 +30,21 @@ public function __construct()
 }
 
 public function body(){
+
+}
+public function style_background(){
+          $style = '<style> 
+            body {
+              background-width:100px;
+              background-height:100px;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-image: url("url_page/image/image_background/url_sept_default.jpg");
+            background-color: #cccccc;
+            }
+          </style>';
+         // 'style="background-image: url("url_page/image/image_background/url_sept_default.jpg"); " ';
+        return $style; 
 
 }
 public function modal(){
@@ -92,9 +108,8 @@ public function letter(){
 public function information_(){
    
    
-
 //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
- $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
 
    
     $prepare = "SELECT * FROM info_harouna";

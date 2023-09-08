@@ -18,8 +18,8 @@ class url_sept_page extends __root_mysql{
     public function url_sept_html($url__sept){
 
         /*confirmer     */
-    $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-        //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+    //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+    $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 
         $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AND sept.id_sept=type_cathegorie.id_sept_cathegorie";

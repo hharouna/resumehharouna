@@ -10,8 +10,8 @@ public function __construct($_sept_url_N)
 }
 public function sept_progress($_id_recrute,$_link_url){
 
-    $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-    //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+    //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+    $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
     $prepare = "SELECT * FROM info_recrute, url_sept WHERE info_recrute.id_recrute=:id_recrute  AND info_recrute.id_recrute=url_sept.url_id_info_recrute ";    $select_array =array(":id_recrute"=>$_id_recrute);
     $this->progress_url=$this->__select($prepare,$select_array,false,$dbh);  
@@ -63,6 +63,19 @@ public function sept_progress($_id_recrute,$_link_url){
 
 }
 
+public function style_background(){
+  $style = '<style> 
+    body {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: url("../image/image_background/url_sept_1.jpg");
+    background-color: #cccccc;
+    }
+  </style>';
+ // 'style="background-image: url("url_page/image/image_background/url_sept_default.jpg"); " ';
+return $style; 
+
+}
 public function html_sept($_url_sept){
     $this->_sept_html='';
     $this->_sept_html.='<div class="container-lg shadow-sm rounded bg-dark text-light mb-3 p-3">';
@@ -75,8 +88,8 @@ public function html_sept($_url_sept){
 public function sept_controle($__url_sept){
 
   /*confirmer     */
-$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 
 $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND sept.id_sept=sept_detail.id_sept_d";
