@@ -48,8 +48,13 @@ require_once("url_page/url_construtor/url_head.php");
 require_once("url_page/url_construtor/url_body.php");
 require_once("url_page/url_construtor/url_foot.php");
 //
-//$url_session = new f_session();
+$url_session = new f_session();
+$url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
 
+if(isset($_SESSION['info_recrute'])):
+header("location: https://".$_HTTP_HOST."/sept_url/url_sept_1/".base64_encode($_SESSION['info_recrute']['id_recrute'])); 
+endif;
+/**/
 $url_head = new url_head($_HTTP_HOST);
 $url_body = new url_body();
 $url_foot = new url_foot();

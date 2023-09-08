@@ -33,7 +33,8 @@ public function body(){
 }
 public function modal(){
 
-    $modal ='<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    $modal ='<div class="modal fade" id="staticBackdrop" 
+    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
       
@@ -48,7 +49,7 @@ public function modal(){
 public function bar_progress_info(){
 $progress_bar ="<div class='text text-center'> <h4> RESUME HAROUNA Harouna </h4></div>";
 $progress_bar .= '<div class="progress mb-5 mt-5" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 1px; width: 100%;">
-<div class="progress-bar" style="width: 25%"></div>
+<div class="progress-bar" style="width: 100%"></div>
 </div>
 ';
  return $progress_bar; 
@@ -57,29 +58,29 @@ $progress_bar .= '<div class="progress mb-5 mt-5" role="progressbar" aria-label=
 public function letter(){
   
 
- $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
- // $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+ //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+  $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
   
      
       $prepare = "SELECT * FROM info_letter";
       $select_array =array();
       $select_letter =$this->__select($prepare,$select_array,false,$dbh);
   
-    $_letter = '<div class="container shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+    $_letter = '<div class="container shadow-lg p-3 mb-5  bg-body-tertiary rounded">
     ';
-    $_letter .= '<div class="row">';
-    $_letter .= '<div class="col m-2 bg-dark text text-light rounded">';
+    $_letter .= '<div class="row p-2 ">';
+    $_letter .= '<div class="col-12 col-sm-12 p-2 col-md-6 col-lg-6 bg-dark text text-light rounded">';
     $_letter .= '<div class="text text-light"><h6> Date Publication : '.$select_letter['date_letter'].'</h6></div>';
     $_letter .= $select_letter['name_letter'];
     $_letter .= '</div>';
-    $_letter .= '<div class="col-sm border-start border-dark p-2"> 
-    <div class="container"> 
-    <div class="row"> 
-    <div class="col"> 
-    <img src="img/myself" class="rounded border border-dark " alt="..."
-     style="width:300px;height:400px;"> </div>';
+    $_letter .= '<div class="col-12 col-sm-12 col-md-5 col-lg-6 "> 
+    <div class="container m-0"> 
+    <div class="row m-0"> 
+    <div class=" col-12 col-sm-12 col-md-5 col-lg-5 m-2"> 
+    <img src="img/myself" class="rounded mx-auto d-block  " alt="..."
+     style="width:100%;height:100%;"> </div>';
     
-     $_letter .= '<div class="col"> '.$this->information_().'</div> </div>';
+     $_letter .= '<div class="col-12 col-sm-12 col-md-6 col-lg-6 m-2"> '.$this->information_().'</div> </div>';
      $_letter .= '</div> ';
      $_letter .= '</div></div> </div>';
    
@@ -92,8 +93,8 @@ public function information_(){
    
    
 
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
- //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
 
    
     $prepare = "SELECT * FROM info_harouna";
@@ -115,22 +116,31 @@ $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@
 
 public function mail_recrute(){
 
-    $_form_recrute ='<div class="container">'; 
+    $_form_recrute ='<div class="container"> '; 
+    $_form_recrute .='<div class="container m-0 mb-2">'; 
     $_form_recrute .='<div class="row">'; 
-    $_form_recrute .='<div class="col">'; 
-    $_form_recrute .= '<div class="input-group mb-3 shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+    $_form_recrute .='<div class="col-12 col-sm-12 col-md-6 col-lg-6">'; 
+    $_form_recrute .='<div class="container p-0 m-0">'; 
+    $_form_recrute .='<div class="row">'; 
+    $_form_recrute .= '<div class="col-12 col-sm-12 col-md-6 col-lg-6 input-group mb-3 shadow-sm p-2 mb-5  rounded">
     <div class="input-group">
-    
-    <input type="text" aria-label="First name" placeholder="Recrute@exemple.com"  class="form-control mail">
-    <input type="text" aria-label="Last name" placeholder="Compagny"  class="form-control compagny">
-    <button class="btn btn-primary btn-info-recrute" > Valider  <i class="fa-solid fa-check"></i></button>
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-6 pt-2 m-0">
+    <input type="text" aria-label="First name" placeholder="Company@resumehharouna.net"  class="form-control mail">
+    </div>
+    <div class="col-sm-6 pt-2 m-0">
+    <input type="text" aria-label="Last name" placeholder="Company"  class="form-control compagny">
+    </div>
+    <div class="col-sm-12 pt-2">
+    <button class="btn btn-primary btn-info-recrute form-control" > Valider  <i class="fa-solid fa-check"></i></button>
+    </div> </div> <div class="alert-company"></div></div>
 
     </div>
-  <div class="alert-company"></div>
-    </div> </div>';
-
-    $_form_recrute .='<div class="col border-start shadow-sm mb-2 bg-dark p-2 text-light rounded">'.$this->alert_recruteur().'</div> '; 
-    $_form_recrute .='</div>'; 
+    </div></div> </div> </div>';
+    $_form_recrute .='<div class="col-12 col-sm-12 col-md-6 col-lg-6">';
+    $_form_recrute .='<div class="border-start shadow-sm mb-2 bg-dark p-2 text-light rounded">'.$this->alert_recruteur().'</div> '; 
+    $_form_recrute .='</div></div></div>'; 
 
 //<button class="btn btn-primary btn-info-recrute" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Valider  <i class="fa-solid fa-check"></i></button>
 
@@ -144,9 +154,7 @@ public function alert_recruteur(){
   $_info_recruteur="<div class=''><h5 class='text text-center text-light'>Information Web browser</h5> </div> ";
   $_info_recruteur.="<div class=''>Navigator : ".$_SERVER['HTTP_USER_AGENT']."</div> <hr>";
   $_info_recruteur.="<div class=''>MyIP : ".$_SERVER['REMOTE_ADDR']."</div>";
-  $_info_recruteur.="<div class=''></div>";
-  $_info_recruteur.="<div class=''></div>";
-  $_info_recruteur.="<div class=''></div>";
+
  
 return $_info_recruteur;
 }

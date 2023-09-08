@@ -30,8 +30,8 @@ class url_confirme_comment extends __root_mysql{
 
  public function step_controle($comment,$id_recrute, $sept_url){
 
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
    
 $rs_id_comment =$this->confirme_comment($comment,$id_recrute, $sept_url,$dbh); 
 

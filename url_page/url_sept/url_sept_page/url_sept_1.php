@@ -18,8 +18,8 @@ class url_sept_page extends __root_mysql{
     public function url_sept_html($url__sept){
 
         /*confirmer     */
-        //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-        $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+        $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+        //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 
         $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AND sept.id_sept=type_cathegorie.id_sept_cathegorie";
@@ -46,7 +46,11 @@ class url_sept_page extends __root_mysql{
         <div class="card h-100 p-2">
         <i class="'.$_fecthAll['c_image'].'"></i>
         <div class="card-body">
-        <h3 class="card-title">'.$_fecthAll['c-title'].'</h3>
+        <h4 class="card-title"><div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+        <label class="form-check-label" for="flexSwitchCheckChecked">'.$_fecthAll['c-title'].' </label>
+      </div>
+      </h4>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
         </div>
         </div>
@@ -111,8 +115,8 @@ public function next_sept($url_sept){
 public function affiche_comment($_url_sept){
 
 
- $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
    
 
 $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";

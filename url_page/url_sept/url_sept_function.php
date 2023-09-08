@@ -10,8 +10,8 @@ public function __construct($_sept_url_N)
 }
 public function sept_progress($_id_recrute,$_link_url){
 
-    //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-    $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+    $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+    //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
     $prepare = "SELECT * FROM info_recrute, url_sept WHERE info_recrute.id_recrute=:id_recrute  AND info_recrute.id_recrute=url_sept.url_id_info_recrute ";    $select_array =array(":id_recrute"=>$_id_recrute);
     $this->progress_url=$this->__select($prepare,$select_array,false,$dbh);  
@@ -60,60 +60,7 @@ public function sept_progress($_id_recrute,$_link_url){
 
   return $_affiche_progress ;
 
-  //  var_dump($array_sept);
 
-    $progress ='<nav class="navbar fixed-top navbar-light shadow-sm bg-dark">
-    <div class="container-fluid">
-   
-    <div class="container-lg">
-    <div class="row p-2">
-   
-    <div class="col text-center p-2 m-2 border border-dark bg-light shadow-sm rounded">
-    Sept '.$_id_recrute.' <i class="fa-solid fa-1"></i>
-    <div class="progress" style="height: 1px; width:100%;">
-    <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-    </div>
-    <div class="col text-center text-secondary  p-2 m-2 border border-light bg-light shadow-sm rounded">
-    Sept  <i class="fa-solid fa-2"></i>
-    <div class="progress" style="height: 1px; width:100%;">
-    <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-    </div>
-    <div class="col text-center text-secondary  p-2 m-2 border border-dark bg-light shadow-sm rounded">
-    Sept  <i class="fa-solid fa-3"></i>
-    <div class="progress" style="height: 1px; width:100%;">
-    <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-    </div>
-    <div class="col text-center text-secondary  p-2 m-2 border border-dark bg-light shadow-sm rounded">
-    Sept  <i class="fa-solid fa-4 "></i>
-    <div class="progress" style="height: 1px; width:100%;">
-    <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-    </div>
-    <div class="col text-center text-secondary  p-2 m-2 border border-dark bg-light shadow-sm rounded">
-     Sept <i class="fa-solid fa-5"></i>
-     <div class="progress" style="height: 1px; width:100%;">
-     <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-   </div>
-    </div>
-    </div>
-  </div> </div>
-
-  <div class="progress" style="height: 2px; width:100%;">
-  <div class="progress-bar" role="progressbar" aria-label="Example 1px high" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-
-  </nav>' 
-  ;
- 
-
-
-
-        
-   
-   // var_dump($this->progress_url['id_recrute']); 
 }
 
 public function html_sept($_url_sept){
@@ -128,8 +75,8 @@ public function html_sept($_url_sept){
 public function sept_controle($__url_sept){
 
   /*confirmer     */
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 
 $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND sept.id_sept=sept_detail.id_sept_d";

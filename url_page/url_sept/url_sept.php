@@ -66,8 +66,8 @@ require_once("../../function_php/url_mysql.php");
 require_once("../url_construtor/url_head.php");
 require_once("../url_construtor/url_foot.php");
 
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 $id_recrute = base64_decode($url_recrute);
 $url_session = new f_session();
@@ -80,7 +80,7 @@ $select_recrutre = $url_mysql->__select($prepare_recrutre,$array_recrutre,false,
 // INFORNATION RECRUTEUR
 
 //$url_session->session("hharouna",true,".".$_SERVER['SERVER_NAME']);
-$url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
+$url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
 $_SESSION['info_recrute'] = $select_recrutre;
 
 //$_SESSION['harouna']="harouna";

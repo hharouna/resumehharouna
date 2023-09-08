@@ -25,8 +25,8 @@ class url_c_insert_recrutor extends __root_mysql{
  public function recrutor_controle(){
 
   //  require_once("../../private/private_resume.php");
-//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
    
     $prepare = "SELECT * FROM info_recrute WHERE info_email=:info_email";
 
@@ -72,13 +72,13 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
             <input type="text" aria-label="Last name" placeholder="CC:" class="form-control cc ">
             <input type="text" aria-label="Last name" placeholder="In: " class="form-control in">
             </div>
-            <div class="alert-confirme-code " > </div>
+            <div class="alert-confirme-code" > </div>
             </div>
             
             <div class="modal-footer">
             <div class="btn-group shadow-sm" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-success confirme-code btn-sm" id_tccin="'.base64_encode($this->resultat_tccin).'" form_id="'.base64_encode($this->select_info["id_recrute"]).'">Confirme code <i class="fa-solid fa-check"></i></button>
-            <button type="button" class="btn btn-primary reload-code btn-sm" id_tccin="'.base64_encode($this->resultat_tccin).'"  form_id="'.base64_encode($this->select_info["id_recrute"]).'"> Relaod code <i class="fa-solid fa-rotate-right"></i></button>
+            <button type="button" class="btn btn-success confirme-code btn-sm " id_tccin="'.base64_encode($this->resultat_tccin).'" form_id="'.base64_encode($this->select_info["id_recrute"]).'">Confirme code <i class="fa-solid fa-check"></i></button>
+            <button type="button" class="btn btn-primary reload-code btn-sm " id_tccin="'.base64_encode($this->resultat_tccin).'"  form_id="'.base64_encode($this->select_info["id_recrute"]).'"> Relaod code <i class="fa-solid fa-rotate-right"></i></button>
             </div>
             
             </div>
