@@ -124,7 +124,7 @@ if(isset($url_sept)):
  $url_sept_function = new url_sept_function($url_sept);
 
  $url_sept_page.= $url_sept_function->sept_progress($_SESSION['info_recrute']['id_recrute'],$url_sept);
- $url_sept_page.= $url_sept_function->style_background();
+ $url_sept_page.= $url_sept_function->style_background($url_sept);
 
  $url_sept_page.= '<div class="container-lg shadow-sm rounded bg-light text-light p-2 mb-5" style ="margin-top:100px;  ">';
  $url_sept_page.=  $url_sept_function->html_sept($url_sept);//initialisation du contenu sept 

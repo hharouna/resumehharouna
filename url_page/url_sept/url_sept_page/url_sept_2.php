@@ -111,8 +111,8 @@ public function next_sept($url_sept){
 public function affiche_comment($_url_sept){
 
 
- //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+ $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
    
 
 $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";

@@ -30,15 +30,15 @@ class url_confirme_comment extends __root_mysql{
 
  public function step_controle($comment,$id_recrute, $sept_url){
 
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-   
-$rs_id_comment =$this->confirme_comment($comment,$id_recrute, $sept_url,$dbh); 
+    require_once("../../private/private_db_root.php"); 
+ 
+  
+$rs_id_comment =$this->confirme_comment($comment,$id_recrute, $sept_url,$db); 
 
 $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";
 
     $select_array =array(":id_r_comment"=>$id_recrute, ":id_sept_comment"=>$sept_url);
-    $this->select_comment=$this->__select($prepare,$select_array,true,$dbh);  
+    $this->select_comment=$this->__select($prepare,$select_array,true,$db);  
     $_rst = $this->select_comment;
     $r_page ="<div class='container '>"; 
     $r_page .="<div class='row p-4 '>"; 
@@ -57,7 +57,7 @@ $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND 
  }
 
 
- public function confirme_comment($_comment,$_id_recrute, $_sept_url,$db){
+ public function confirme_comment($_comment,$_id_recrute, $_sept_url,$_db){
 
       /* insertion des information company  */
       $this->array_comment = array(":id_r_comment"=>$_id_recrute,
@@ -65,7 +65,7 @@ $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND 
        
       $prepare = "INSERT INTO sept_commentaire(id_r_comment,id_sept_comment,sept_comment) 
       VALUES (:id_r_comment,:id_sept_comment,:sept_comment)";
-      $this->resultat_c= $this->__insert($prepare,$this->array_comment,$db); 
+      $this->resultat_c= $this->__insert($prepare,$this->array_comment,$_db); 
 
       /* insertion des information company  */
     sleep(2);  

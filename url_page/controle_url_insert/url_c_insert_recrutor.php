@@ -16,6 +16,9 @@ class url_c_insert_recrutor extends __root_mysql{
 
     public function __construct($recrutor_mail, $compagny)
     {
+
+    //require_once("../private/private_db_root.php"); 
+        
         $this->_mail_recrutor = $recrutor_mail; 
         $this->_info_compagny = $compagny; 
         $this->_user= $_SERVER['HTTP_USER_AGENT'];
@@ -23,29 +26,30 @@ class url_c_insert_recrutor extends __root_mysql{
     }
 
  public function recrutor_controle(){
-
-  //  require_once("../../private/private_resume.php");
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-   
+    //connexion db
+  require_once("../../private/private_db_root.php"); 
+/*
+//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+   */
     $prepare = "SELECT * FROM info_recrute WHERE info_email=:info_email";
 
     $select_array =array(":info_email"=>$this->_mail_recrutor);
-    $this->select_info =$this->__select($prepare,$select_array,false,$dbh);  
+    $this->select_info =$this->__select($prepare,$select_array,false,$db);  
     $_rst = $this->select_info;
 
    if($_rst["info_email"]== $this->_mail_recrutor && $_rst["info_active"]==0 ): 
 
     $this->select_confirme_code($dbh,$_rst["id_recrute"]); 
     return array("r_id"=>base64_encode($_rst["id_recrute"]),
-    "r_tccin"=>base64_encode($this->select_confirme_code($dbh,$_rst["id_recrute"])),
+    "r_tccin"=>base64_encode($this->select_confirme_code($db,$_rst["id_recrute"])),
     "r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]); endif; 
     
    if($_rst["info_email"]== $this->_mail_recrutor &&  $_rst["info_active"]==1):  
     return array("r_id"=>$_rst["id_recrute"],"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]) ; endif;
 
    if(empty($_rst)): 
-    return $this->recrutor_insert($dbh); endif;
+    return $this->recrutor_insert($db); endif;
 
  }
  public function select_confirme_code($__db, $__id_recrute){
@@ -82,7 +86,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@
             </div>
             
             </div>
-            <div class="alert-reload-code"> </div>
+            <div class="alert-reload-code " role="">  </div>
             </div>';
     return $_confirme_email;
  }

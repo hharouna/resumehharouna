@@ -11,11 +11,13 @@ define('HOST_PASS',"0000001Le");
 // ZONE STRICTEMENT RESERVER ----***** MERCI DE NE PAS MODIFIER// TOUS DROIT RESERVER;
 //LISTE DES HOSTS
 $valhostdb=""; 
+
+//$dbh =  ('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
 */
-define("HOST_DB","mysql:78.138.45.54;dbname=c1prendall");
+define("HOST_DB","mysql:host=localhost;dbname=resumehharouna");
 //USER ET MOT DE PASSE 
-define("HOST_USER","admin");
-define("HOST_PASS","43xOQ6X)q3J1B334");
+define("HOST_USER","root");
+define("HOST_PASS","0000001LE@");
 
 class HOST{
 	

@@ -18,14 +18,14 @@ class url_sept_page extends __root_mysql{
     public function url_sept_html($url__sept){
 
         /*confirmer     */
-    //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-    $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+    
+    require_once("../../private/private_db_root.php"); 
 
 
         $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AND sept.id_sept=type_cathegorie.id_sept_cathegorie";
 
         $select_array =array(":url_link"=>$url__sept);
-        $this->type_cat=$this->__select($prepare,$select_array,true,$dbh);  
+        $this->type_cat=$this->__select($prepare,$select_array,true,$db);  
         $count= count($this->type_cat);
 
         //function sept url_sept_N
@@ -111,14 +111,14 @@ public function next_sept($url_sept){
 public function affiche_comment($_url_sept){
 
 
- //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+
+require_once("../../private/private_db_root.php"); 
    
 
 $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";
 
     $select_array =array(":id_r_comment"=>base64_encode($_SESSION['info_recrute']['id_recrute']), ":id_sept_comment"=>$_url_sept);
-    $this->select_comment=$this->__select($prepare,$select_array,true,$dbh);  
+    $this->select_comment=$this->__select($prepare,$select_array,true,$db);  
     $_rst = $this->select_comment;
     if(isset($_rst)):
     $r_page ="<div class='container '>"; 

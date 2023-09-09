@@ -263,12 +263,11 @@ var fun_resume = {
          data: {compagny: compagny ,  email: email},  
          success: function(resultat) {
          if(resultat['Error']==0){
-          $(b_this).html('Valider  <i class="fa-solid fa-check"></i>')
+          $(b_this).html('Confirme <i class="fa-solid fa-check"></i>')
           $("div.alert-company").addClass("alert alert-warning p-2 mt-2 form-control").html(resultat["contenu"])
          }else{
        $("#staticBackdrop").modal("show")
-       $(".modal-content").html(url_animation.url_spinner("dark","",true)).addClass("m-3 p-3")
-       $(".modal-content").html(resultat["form_tccin"]).addClass("m-3 p-3")
+       $(".modal-content").html(resultat["form_tccin"])
        $("input.compagny").attr("disabled", "disabled")
        $("input.mail").attr("disabled", "disabled")
        }
@@ -348,11 +347,11 @@ var fun_resume = {
          data: {form_id:form_id_},  
          success: function(resultat) {
           if(resultat["resultat"]==true){
-            $(".alert-reload-code").html("reload code success").addClass("alert-access form-controle")
-             $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right></i>').addClass("alert-primary")
+            $(".alert-reload-code").html("reload code success").addClass(" shadow-sm alert alert-access form-control p-1 text text-center").attr('role','alert')
+             $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right"></i>').addClass("alert-primary")
             }else{
-            $(".alert-reload-code").html("reload code success").addClass("alert-danger")
-            $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right></i>').addClass("alert-danger").removeClass("btn-primary")
+            $(".alert-reload-code").html("reload code success").addClass("alert alert-success form-control p-1 text text-center")
+            $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right"></i>').addClass("alert-danger").removeClass("btn-primary").attr('role','alert')
             }
         }
  

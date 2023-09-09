@@ -9,10 +9,11 @@ public function __construct($_sept_url_N)
    // return $this->sept_controle($_sept_url_N); 
 }
 public function sept_progress($_id_recrute,$_link_url){
-
+  require_once("../../private/private_db_root.php"); 
+   
     //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
     $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-
+/**/
     $prepare = "SELECT * FROM info_recrute, url_sept WHERE info_recrute.id_recrute=:id_recrute  AND info_recrute.id_recrute=url_sept.url_id_info_recrute ";    $select_array =array(":id_recrute"=>$_id_recrute);
     $this->progress_url=$this->__select($prepare,$select_array,false,$dbh);  
 
@@ -63,12 +64,13 @@ public function sept_progress($_id_recrute,$_link_url){
 
 }
 
-public function style_background(){
+public function style_background($_url_sept){
   $style = '<style> 
     body {
+     
     background-repeat: no-repeat;
     background-size: 100%;
-    background-image: url("../image/image_background/url_sept_1.jpg");
+    background-image: url("/url_page/image/image_background/'.$_url_sept.'.jpg");
     background-color: #cccccc;
     }
   </style>';
@@ -87,9 +89,11 @@ public function html_sept($_url_sept){
 
 public function sept_controle($__url_sept){
 
-  /*confirmer     */
+  /*confirmer    
 //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
 $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+ */
+require_once("../../private/private_db_root.php"); 
 
 
 $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND sept.id_sept=sept_detail.id_sept_d";
@@ -104,7 +108,7 @@ $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND se
             $sept_contenu.= $this->url_sept['Contenu_sept']; 
             $sept_contenu.= '</div>'; 
             $sept_contenu.= '<div class="col-12 col-sm-6  col-md-4 col-lg-4 text-black p-2 ">'; 
-            $sept_contenu.= $this->competence($__url_sept,$this->url_sept['title_sept'],$dbh); 
+            $sept_contenu.= $this->competence($__url_sept,$this->url_sept['title_sept'],$db); 
             $sept_contenu.= '</div>'; 
             $sept_contenu.= "</div></div>"; 
             $sept_contenu.= ""; 
@@ -112,12 +116,12 @@ $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND se
 
 
 }
-public function competence($url__sept, $url_sept_contenu,$db){
+public function competence($url__sept, $url_sept_contenu,$_db){
 
 $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AND sept.id_sept=type_cathegorie.id_sept_cathegorie";
 
     $select_array =array(":url_link"=>$url__sept);
-    $this->type_cat=$this->__select($prepare,$select_array,true,$db);  
+    $this->type_cat=$this->__select($prepare,$select_array,true,$_db);  
 
       //function sept url_sept_N
       $this->_html_type_cat = '<div class="container-lg shadow-sm rounded bg-dark text-light mb-3 p-3" > 
