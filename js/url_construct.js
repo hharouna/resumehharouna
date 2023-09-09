@@ -265,7 +265,10 @@ var fun_resume = {
          if(resultat['Error']==0){
           $(b_this).html('Confirme <i class="fa-solid fa-check"></i>')
           $("div.alert-company").addClass("alert alert-warning p-2 mt-2 form-control").html(resultat["contenu"])
-         }else{
+         }
+         else if(resultat['resultat']==true && resultat['r']['r_active']==1){
+          window.location.replace(resultat['r']['link']);
+        }else{
        $("#staticBackdrop").modal("show")
        $(".modal-content").html(resultat["form_tccin"])
        $("input.compagny").attr("disabled", "disabled")
@@ -295,7 +298,7 @@ var fun_resume = {
           $(b_this).html('Confirme code <i class="fa-solid fa-check"></i>')
           $("div.alert-confirme-code").addClass("alert alert-warning p-1 mt-2").html(resultat["msg"])
          }else{
-          window.location.replace("https://resumehharouna.net"+resultat['link']);
+          window.location.replace(resultat['link']);
          }
          
      }
@@ -347,10 +350,10 @@ var fun_resume = {
          data: {form_id:form_id_},  
          success: function(resultat) {
           if(resultat["resultat"]==true){
-            $(".alert-reload-code").html("reload code success").addClass(" shadow-sm alert alert-access form-control p-1 text text-center").attr('role','alert')
+            $(".alert-reload-code").html("Reload code success").addClass(" shadow-sm alert alert-success form-control p-1 text text-center").attr('role','alert')
              $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right"></i>').addClass("alert-primary")
             }else{
-            $(".alert-reload-code").html("reload code success").addClass("alert alert-success form-control p-1 text text-center")
+            $(".alert-reload-code").html("trying again !!!").addClass("alert alert-danger form-control p-1 text text-center")
             $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right"></i>').addClass("alert-danger").removeClass("btn-primary").attr('role','alert')
             }
         }

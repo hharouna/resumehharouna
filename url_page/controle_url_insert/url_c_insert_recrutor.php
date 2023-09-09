@@ -9,6 +9,7 @@
 extract($_POST);
 require_once("../../function_php/private_connect/root_mail_sms.php");
 require_once("../../function_php/url_mysql.php");
+require_once("../../private/private_db_root.php"); 
 
 class url_c_insert_recrutor extends __root_mysql{
 
@@ -25,9 +26,8 @@ class url_c_insert_recrutor extends __root_mysql{
         $this->_ip = $_SERVER['REMOTE_ADDR'];
     }
 
- public function recrutor_controle(){
+ public function recrutor_controle($db_){
     //connexion db
-  require_once("../../private/private_db_root.php"); 
 /*
 //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
@@ -35,23 +35,24 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
     $prepare = "SELECT * FROM info_recrute WHERE info_email=:info_email";
 
     $select_array =array(":info_email"=>$this->_mail_recrutor);
-    $this->select_info =$this->__select($prepare,$select_array,false,$db);  
+    $this->select_info =$this->__select($prepare,$select_array,false,$db_);  
     $_rst = $this->select_info;
 
    if($_rst["info_email"]== $this->_mail_recrutor && $_rst["info_active"]==0 ): 
 
-    $this->select_confirme_code($dbh,$_rst["id_recrute"]); 
+    $this->select_confirme_code($db_,$_rst["id_recrute"]); 
     return array("r_id"=>base64_encode($_rst["id_recrute"]),
-    "r_tccin"=>base64_encode($this->select_confirme_code($db,$_rst["id_recrute"])),
+    "r_tccin"=>base64_encode($this->select_confirme_code($db_,$_rst["id_recrute"])),
     "r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]); endif; 
     
    if($_rst["info_email"]== $this->_mail_recrutor &&  $_rst["info_active"]==1):  
-    return array("r_id"=>$_rst["id_recrute"],"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]) ; endif;
+    return array("r_id"=>base64_encode($_rst["id_recrute"]),"r_active"=>$_rst["info_active"],"link"=>"http://".$_SERVER['HTTP_HOST']."/sept_url/url_sept_1/".base64_encode($_rst["id_recrute"])) ; endif;
 
    if(empty($_rst)): 
-    return $this->recrutor_insert($db); endif;
+    return $this->recrutor_insert($db_); endif;
 
  }
+
  public function select_confirme_code($__db, $__id_recrute){
     
     $prepare = "SELECT * FROM code_t_cc_in WHERE id_recrutre_tccin=:id_recrutre_tccin";
@@ -167,12 +168,13 @@ for($i = 0; $i<=$_count_array-1; $i++){
     $controle_insert_compagny = new url_c_insert_recrutor($email, $compagny); 
 
     // resultat des donnees    
-    $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle(), 
+    $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle($db), 
     "email"=>$controle_insert_compagny->_mail_recrutor,"form_tccin"=>$controle_insert_compagny->form_Confirme_email()); 
 
 
     if(isset($email)&& isset($compagny)):
     echo json_encode($_resultat); 
+    exit; 
     else:
     header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
     endif; 

@@ -48,8 +48,8 @@ if($_rst["recrute_active"]==0 && $_rst["f_t"]==$f__t && $_rst["f_cc"]==$f__cc &&
             $update_array_tccin=array(":id_recrutre_tccin"=> $form__id , ":active"=>1);
             $this->update_codetccin =$this->__update($prepare_tccin,$update_array_tccin,$db);  
 
-            $prepare_url_sept ="INSERT INTO url_sept(url_id_info_recrute,url_sept_1) VALUES (:url_id_info_recrute,:url_sept_1)";
-            $array_url_sept =array(':url_id_info_recrute'=>$form__id,':url_sept_1'=>1);
+            $prepare_url_sept ="INSERT INTO url_sept(url_id_info_recrute,url_sept_1,url_sept_2,url_sept_3,url_sept_4,url_sept_5) VALUES (:url_id_info_recrute,:url_sept_1, :url_sept_2, :url_sept_3,:url_sept_4,:url_sept_5)";
+            $array_url_sept =array(':url_id_info_recrute'=>$form__id,':url_sept_1'=>1,':url_sept_2'=>1,':url_sept_3'=>1,':url_sept_4'=>1,':url_sept_5'=>1);
             $this->insert_url_sept = $this->__insert($prepare_url_sept,$array_url_sept,$db); 
 
             //---------------- /--------- --------- // ----- /// -----------------------
@@ -60,15 +60,26 @@ if($_rst["recrute_active"]==0 && $_rst["f_t"]==$f__t && $_rst["f_cc"]==$f__cc &&
 
             echo json_encode(array("Error"=>1, "code"=>$_rst, "id"=>$form__id , 
             "truemode"=>$this->update_recrutre, "id_tccin"=>$select_code_t_cc_in, 
-            "update_tccin"=>$this->update_codetccin, "link"=>"/sept_url/url_sept_1/$f__in")); 
+            "update_tccin"=>$this->update_codetccin, "link"=>"http://".$_SERVER['HTTP_HOST']."/sept_url/url_sept_1/$f__in")); 
 
             exit; 
 
         endif; 
 
     else:
-        
-        return array("Error"=>1, "link"=>"/sept_url/url_sept_1/$f__in");
+        $_array_code = array($_rst["f_t"],$_rst["f_cc"],$_rst["f_in"]);
+        $_array_form = array($f__t,$f__cc,$f__in);
+        $_array_tccin = array("T","CC","IN");
+        $count_array_code = count($_array_code); 
+
+        for($i=0;$i<=$count_array_code-1;$i++){
+            if($_array_code[$i]!=$_array_form[$i]):
+             $error_tccin = $_array_tccin[$i];
+             break;
+            endif;
+        }
+
+        return array("Error"=>0, "msg"=>"code Error: ".$error_tccin);
 
  endif; 
 

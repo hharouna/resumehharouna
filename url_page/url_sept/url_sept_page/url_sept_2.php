@@ -15,17 +15,15 @@ class url_sept_page extends __root_mysql{
         
     }
     
-    public function url_sept_html($url__sept){
+    public function url_sept_html($url__sept,$_db){
 
         /*confirmer     */
-        //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-        $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 
         $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AND sept.id_sept=type_cathegorie.id_sept_cathegorie";
 
         $select_array =array(":url_link"=>$url__sept);
-        $this->type_cat=$this->__select($prepare,$select_array,true,$dbh);  
+        $this->type_cat=$this->__select($prepare,$select_array,true,$_db);  
         $count= count($this->type_cat);
 
         //function sept url_sept_N
@@ -35,9 +33,9 @@ class url_sept_page extends __root_mysql{
 
         /*
 
-          foreach($_db_root_admin['fectAll'] as $rs_fe => $_fecthAll){
-            $r_page .= $_fecthAll['root_mail'];
-          }
+        foreach($_db_root_admin['fectAll'] as $rs_fe => $_fecthAll){
+        $r_page .= $_fecthAll['root_mail'];
+        }
         */
         foreach($this->type_cat['fectAll'] as $rs_fe => $_fecthAll){
 
@@ -46,16 +44,20 @@ class url_sept_page extends __root_mysql{
         <div class="card h-100 p-2">
         <i class="'.$_fecthAll['c_image'].'"></i>
         <div class="card-body">
-        <h3 class="card-title">'.$_fecthAll['c-title'].'</h3>
+        <h4 class="card-title"><div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+        <label class="form-check-label" for="flexSwitchCheckChecked">'.$_fecthAll['c-title'].' </label>
+        </div>
+        </h4>
         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
         </div>
         </div>
         </div>';
         }
         $this->_html.='</div>';
-        
-            
-        $this->_html.=$this->commentaire_ckeditor($url__sept).$this->next_sept($url__sept);
+
+
+        $this->_html.=$this->commentaire_ckeditor($url__sept,$_db).$this->next_sept($url__sept,$_db);
         $this->_html.=' </div></div>';
 
 
@@ -65,13 +67,13 @@ class url_sept_page extends __root_mysql{
 
 
 
-      public function type_cat_contenu($id_type_cat,$db){
+      public function type_cat_contenu($id_type_cat,$_db){
 
 
         $prepare = "SELECT * FROM type_cathegorie WHERE type_cathegorie.id_cathegorie=:id_cathegorie";
 
         $select_array =array(":id_cathegorie"=>$id_type_cat);
-        $this->type_cat=$this->__select($prepare,$select_array,true,$db);  
+        $this->type_cat=$this->__select($prepare,$select_array,true,$_db);  
         $count= count($this->type_cat);
 
       }
@@ -80,7 +82,7 @@ class url_sept_page extends __root_mysql{
 
 
 
-public function next_sept($url_sept){
+public function next_sept($url_sept,$_db){
   $next_sept = '<div class="container-lg shadow-sm p-2">';
   $next_sept .='<button class="btn btn-success" > Next sept : '.$url_sept.' </button>';
   $next_sept .='</div>';
@@ -89,10 +91,10 @@ public function next_sept($url_sept){
   
  }
  
- public function commentaire_ckeditor($url_sept){
+ public function commentaire_ckeditor($url_sept,$__db){
  
     $next_comment = '<hr > <div class="return_comment">';
-    $next_comment .= $this->affiche_comment($url_sept);
+    $next_comment .= $this->affiche_comment($url_sept, $__db);
     $next_comment .= '</div>';
     $next_comment .= '<hr><div class="container-lg bg-light mt-3 shadow-sm rounded p-2 ">';
     $next_comment .='<div class="form-floating">
@@ -108,32 +110,27 @@ public function next_sept($url_sept){
 
     return $next_comment;
  }
-public function affiche_comment($_url_sept){
+public function affiche_comment($_url_sept,$___db){
 
+      $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";
 
- $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-   
-
-$prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";
-
-    $select_array =array(":id_r_comment"=>base64_encode($_SESSION['info_recrute']['id_recrute']), ":id_sept_comment"=>$_url_sept);
-    $this->select_comment=$this->__select($prepare,$select_array,true,$dbh);  
-    $_rst = $this->select_comment;
-    if(isset($_rst)):
-    $r_page ="<div class='container '>"; 
-    $r_page .="<div class='row p-4 '>"; 
-    $r_page .="<div class='col-12 bg-success text text-light rounded shadow-sm p-2 mt-2 mb-2 '> <i class='fa-solid fa-heart fa-lg'style='color: #da0e13;'></i> Thanks for your participating ".$_SESSION['info_recrute']['info_company_recrute']."</div>"; 
-    foreach($_rst['fectAll'] as $rs_fe => $_fecthAll){
-        $r_page .= "<div class='form-control shadow-sm bg-light mt-2 pt-2 pb-2 rounded ' comment_id='".$_fecthAll["id_comment"]."' >"; 
-        $r_page .= $_fecthAll["sept_comment"];
-        $r_page .= " <br><span class='text text-secondary  text-sm'>  date : ".$_fecthAll['date_commentaire']." </span>";
-        $r_page .= "</div>";
+      $select_array =array(":id_r_comment"=>base64_encode($_SESSION['info_recrute']['id_recrute']), ":id_sept_comment"=>$_url_sept);
+      $this->select_comment=$this->__select($prepare,$select_array,true,$___db);  
+      $_rst = $this->select_comment;
+      if(isset($_rst)):
+      $r_page ="<div class='container '>"; 
+      $r_page .="<div class='row p-4 '>"; 
+      $r_page .="<div class='col-12 bg-success text text-light rounded shadow-sm p-2 mt-2 mb-2 '> <i class='fa-solid fa-heart fa-lg'style='color: #da0e13;'></i> Thanks for your participating ".$_SESSION['info_recrute']['info_company_recrute']."</div>"; 
+      foreach($_rst['fectAll'] as $rs_fe => $_fecthAll){
+      $r_page .= "<div class='form-control shadow-sm bg-light mt-2 pt-2 pb-2 rounded ' comment_id='".$_fecthAll["id_comment"]."' >"; 
+      $r_page .= $_fecthAll["sept_comment"];
+      $r_page .= " <br><span class='text text-secondary  text-sm'>  date : ".$_fecthAll['date_commentaire']." </span>";
+      $r_page .= "</div>";
       }
       $r_page .="</div> </div>"; 
 
-     return  $r_page; 
-    endif;
+      return  $r_page; 
+      endif;
 }
 
 }

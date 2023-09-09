@@ -5,8 +5,6 @@
 
 */
 
-
-
 extract($_POST);
 require_once("../../function_php/private_connect/root_mail_sms.php");
 require_once("../../function_php/url_mysql.php");

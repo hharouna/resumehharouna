@@ -50,7 +50,6 @@ require_once("url_page/url_construtor/url_foot.php");
 //
 $url_session = new f_session();
 $url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
-
 unset($_SESSION['info_recrute']);
 if(isset($_SESSION['info_recrute'])):
 header("location: http://".$_HTTP_HOST."/sept_url/url_sept_1/".base64_encode($_SESSION['info_recrute']['id_recrute'])); 

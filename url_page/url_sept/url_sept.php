@@ -65,24 +65,26 @@ require_once("../../function_php/url_mysql.php");
 
 require_once("../url_construtor/url_head.php");
 require_once("../url_construtor/url_foot.php");
+require_once("../../private/private_db_root.php"); 
 
 //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
+//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 $id_recrute = base64_decode($url_recrute);
+
 $url_session = new f_session();
 $url_mysql = new __root_mysql();
 $prepare_recrutre = "SELECT * FROM info_recrute,url_sept WHERE info_recrute.id_recrute=:id_recrute AND info_recrute.id_recrute=url_sept.url_id_info_recrute";
 
 $array_recrutre= array("id_recrute"=>$id_recrute);
-$select_recrutre = $url_mysql->__select($prepare_recrutre,$array_recrutre,false,$dbh); 
+$select_recrutre = $url_mysql->__select($prepare_recrutre,$array_recrutre,false,$db); 
 
 // INFORNATION RECRUTEUR
 
 //$url_session->session("hharouna",true,".".$_SERVER['SERVER_NAME']);
 $url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
 $_SESSION['info_recrute'] = $select_recrutre;
-
+//var_dump($_SESSION['info_recrute']);
 //$_SESSION['harouna']="harouna";
 
 $url_head = new url_head($_HTTP_HOST);
@@ -119,18 +121,21 @@ echo $url_page->contenu($dbh);
 $url_sept_page= $url_head->_url_head;
 if(isset($url_sept)):
    require_once("url_sept_page/$url_sept.php");
+  
    require_once("url_sept_function.php");
+   
  $url_html_sept = new url_sept_page(); 
  $url_sept_function = new url_sept_function($url_sept);
 
- $url_sept_page.= $url_sept_function->sept_progress($_SESSION['info_recrute']['id_recrute'],$url_sept);
+ $url_sept_page.= $url_sept_function->sept_progress($_SESSION['info_recrute']['id_recrute'],$url_sept,$db);
  $url_sept_page.= $url_sept_function->style_background($url_sept);
-
+   
  $url_sept_page.= '<div class="container-lg shadow-sm rounded bg-light text-light p-2 mb-5" style ="margin-top:100px;  ">';
- $url_sept_page.=  $url_sept_function->html_sept($url_sept);//initialisation du contenu sept 
- $url_sept_page.=  $url_html_sept->url_sept_html($url_sept);// initialition du contenu url_sep_N
+ $url_sept_page.=  $url_sept_function->html_sept($url_sept,$db);//initialisation du contenu sept 
+ 
+ $url_sept_page.=  $url_html_sept->url_sept_html($url_sept,$db);// initialition du contenu url_sep_N
  $url_sept_page.=  "</div>";
-  
+
  
  
 else:
