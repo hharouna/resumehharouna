@@ -74,7 +74,7 @@ require_once("../../private/private_db_root.php");
 $id_recrute = base64_decode($url_recrute);
 
 $url_session = new f_session();
-$url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
+$url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
 
 $url_mysql = new __root_mysql();
 $prepare_recrutre = "SELECT * FROM info_recrute,url_sept WHERE info_recrute.id_recrute=:id_recrute AND info_recrute.id_recrute=url_sept.url_id_info_recrute";
@@ -86,7 +86,7 @@ if($_SESSION['E_MAIL']!=$select_recrutre['info_email'] ||  $select_recrutre==fal
 
  unset($_SESSION['E_MAIL']);
  unset($_SESSION['info_recrute']); 
- $url_session->f_deconnect("hharouna",false,$_SERVER['SERVER_NAME']);
+ $url_session->f_deconnect("hharouna",true,$_SERVER['SERVER_NAME']);
  header("location: http://".$_SERVER['HTTP_HOST']); 
 
   exit; 

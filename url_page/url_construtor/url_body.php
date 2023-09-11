@@ -142,7 +142,7 @@ public function mail_recrute(){
     <div class="container" style="margin:0px; padding:0px;">
     <div class="row">
     <div class="col-sm-6 pt-2 m-0">
-    <input type="text" aria-label="First name" placeholder="Company@resumehharouna.net"  class="form-control mail">
+    <input type="text" aria-label="First name" placeholder="Company@exemple.com"  class="form-control mail">
     </div>
     <div class="col-sm-6 pt-2 m-0">
     <input type="text" aria-label="Last name" placeholder="Company"  class="form-control compagny">

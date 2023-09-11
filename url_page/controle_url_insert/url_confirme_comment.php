@@ -104,7 +104,7 @@ for($i = 0; $i<=$_count_array-1; $i++){
 }
 
     $session = new f_session();
-    $session->session("hharouna",false,$_SERVER['SERVER_NAME']);
+    $session->session("hharouna",true,$_SERVER['SERVER_NAME']);
     $url_confirme_comment = new url_confirme_comment($id_recrute,$url,$comment_val);
 
     // resultat des donnees    

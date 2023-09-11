@@ -1,6 +1,7 @@
 <?php 
 require_once("../../function_php/url_mysql.php");
 require_once("../../private/private_db_root.php"); 
+require_once("../../function_php/f_session/f_session.php");
 
 class confirme_code_recrutor extends __root_mysql{
 
@@ -20,7 +21,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@
 */
  /* update active info_recrutre  
  info_recrute.info_active as recrute_active, code_t_cc_in.c_t as f_t, code_t_cc_in.c_cc as f_cc, code_t_cc_in.c_in as f_in*/
-$prepare = "SELECT info_recrute.id_recrute as id_recru, info_recrute.info_active as recrute_active, code_t_cc_in.c_t as f_t, code_t_cc_in.c_cc as f_cc, code_t_cc_in.c_in as f_in
+$prepare = "SELECT info_recrute.id_recrute as id_recru, info_recrute.info_email as email_info , info_recrute.info_active as recrute_active, code_t_cc_in.c_t as f_t, code_t_cc_in.c_cc as f_cc, code_t_cc_in.c_in as f_in
 FROM info_recrute, code_t_cc_in WHERE info_recrute.id_recrute=:id_recrute
 AND code_t_cc_in.id_recrutre_tccin=:id_recrute";
 
@@ -62,7 +63,9 @@ if($_rst["recrute_active"]==0 && $_rst["f_t"]==$f__t && $_rst["f_cc"]==$f__cc &&
             echo json_encode(array("Error"=>1, "code"=>$_rst, "id"=>$form__id , 
             "truemode"=>$this->update_recrutre, "id_tccin"=>$select_code_t_cc_in, 
             "update_tccin"=>$this->update_codetccin, "link"=>"http://".$_SERVER['HTTP_HOST']."/sept_url/url_sept_1/$f__in")); 
-
+            /* save email in session */
+            $_SESSION['E_MAIL']=$_rst["email_info"];
+            
             exit; 
 
         endif; 
@@ -111,6 +114,9 @@ if($_rst["recrute_active"]==0 && $_rst["f_t"]==$f__t && $_rst["f_cc"]==$f__cc &&
 $decode_id_form_id =base64_decode($form_id);
 
 $_code_confirme = new confirme_code_recrutor($decode_id_form_id); 
+$url_session = new f_session();
+$url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
+    
 //156872 	637093 	NjE= {"Error":0,"commande":{"recrute_active":"1","0":"1","f_t":"148135","1":"148135","f_cc":"498794","2":"498794","f_in":"NTg=","3":"NTg="
 echo json_encode($_code_confirme->confirme_code($decode_id_form_id,$f_t,$f_cc,$f_in,$db));
 

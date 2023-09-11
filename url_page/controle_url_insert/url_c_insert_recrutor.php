@@ -166,7 +166,7 @@ $_count_preg = count($_array_empty);
 
     $controle_insert_compagny = new url_c_insert_recrutor($email, $compagny); 
     $url_session = new f_session();
-    $url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
+    $url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
     
     // resultat des donnees    
     $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle($db), 

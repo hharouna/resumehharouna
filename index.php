@@ -50,7 +50,7 @@ require_once("url_page/url_construtor/url_body.php");
 require_once("url_page/url_construtor/url_foot.php");
 //
 $url_session = new f_session();
-$url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
+$url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
 if(isset($_SESSION['E_MAIL'])):
 header("location: http://".$_HTTP_HOST."/sept_url/url_sept_1/".base64_encode($_SESSION['info_recrute']['id_recrute'])); 
 endif;
