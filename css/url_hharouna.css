@@ -1,0 +1,20 @@
+
+
+
+.padded-multiline { 
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/skyscrapers.jpg);
+    line-height: 1.4; 
+    padding: 120px 50px 50px 50px;
+    width: 400px;
+    margin: 20px auto;
+  }
+  .padded-multiline span { 
+    background-color: black;
+    color: #fff; 
+    display: inline;
+    padding: 0.5rem;
+    
+    /* Needs prefixing */
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }

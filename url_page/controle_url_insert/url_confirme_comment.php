@@ -38,11 +38,11 @@ $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND 
     $select_array =array(":id_r_comment"=>$id_recrute, ":id_sept_comment"=>$sept_url);
     $this->select_comment=$this->__select($prepare,$select_array,true,$db);  
     $_rst = $this->select_comment;
-    $r_page ="<div class='container '>"; 
+    $r_page ="<div class='container'>"; 
     $r_page .="<div class='row p-4 '>"; 
     $r_page .="<div class='col-12 bg-dark text text-light rounded shadow-sm p-2 mt-2 mb-2 '> <i class='fa-solid fa-heart fa-lg'style='color: #da0e13;'></i> Thanks for your participating ".$_SESSION['info_recrute']['info_company_recrute']."</div>"; 
     foreach($_rst['fectAll'] as $rs_fe => $_fecthAll){
-        $r_page .= "<div class='form-control shadow-sm bg-light mt-2 pt-2 pb-2 rounded ' comment_id='".$_fecthAll["id_comment"]."' >"; 
+        $r_page .= "<div class='form-control shadow-sm bg-light mt-2 pt-2 pb-2 rounded' comment_id='".$_fecthAll["id_comment"]."' >"; 
         $r_page .= $_fecthAll["sept_comment"];
         $r_page .= " <br><span class='text text-secondary  text-sm'>  date : ".$_fecthAll['date_commentaire']." </span>";
         $r_page .= "</div>";

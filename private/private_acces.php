@@ -13,11 +13,16 @@ define('HOST_PASS',"0000001Le");
 $valhostdb=""; 
 
 //$dbh =  ('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
+define("HOST_DB","mysql:host=localhost;dbname=c1prendall");
+//USER ET MOT DE PASSE 
+define("HOST_USER","root");
+define("HOST_PASS","eydf-MxkhI@CDC!J");
 */
 define("HOST_DB","mysql:host=localhost;dbname=resumehharouna");
 //USER ET MOT DE PASSE 
 define("HOST_USER","root");
 define("HOST_PASS","0000001LE@");
+
 
 class HOST{
 	

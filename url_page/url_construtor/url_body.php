@@ -9,12 +9,12 @@ public $html_body, $cont_start,  $cont_end, $nav_start, $nav_end;
 public $cont_contenu, $search, $require_url , $_connexion; 
 public $url_mysql; 
 
-public function __construct()
+public function __construct($_db)
 {
     /*
     html_body constuire l'ensemble de la page 
     */ 
-    require_once("private/private_db_root.php");
+    //require_once("private/private_db_root.php");
 
 
             $this->html_body=$this->modal();
@@ -23,8 +23,8 @@ public function __construct()
             $this->html_body.='<div class="container-lg   mb-5 bg-body-tertiary rounded">';
             $this->html_body.=$this->bar_progress_info();
             $this->html_body.=$this->mail_recrute();
-            $this->html_body.=$this->body($db);
-            $this->html_body.=$this->letter($db);
+            $this->html_body.=$this->body($_db);
+            $this->html_body.=$this->letter($_db);
             $this->html_body.='</div>';
             $this->html_body.='</body>';
  

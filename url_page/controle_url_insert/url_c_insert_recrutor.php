@@ -8,6 +8,7 @@
 
 extract($_POST);
 require_once("../../function_php/private_connect/root_mail_sms.php");
+require_once("../../function_php/f_session/f_session.php");
 require_once("../../function_php/url_mysql.php");
 require_once("../../private/private_db_root.php"); 
 
@@ -46,6 +47,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
     "r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]); endif; 
     
    if($_rst["info_email"]== $this->_mail_recrutor &&  $_rst["info_active"]==1):  
+    $_SESSION['E_MAIL']=$_rst["info_email"];
     return array("r_id"=>base64_encode($_rst["id_recrute"]),"r_active"=>$_rst["info_active"],"link"=>"http://".$_SERVER['HTTP_HOST']."/sept_url/url_sept_1/".base64_encode($_rst["id_recrute"])) ; endif;
 
    if(empty($_rst)): 
@@ -66,29 +68,29 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
  }
  public function form_Confirme_email(){
 
-            $_confirme_email ='<div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Confirme E-mail</h1>
-            <button type="button" class="btn-close btn-info-r-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <div class="input-group">
-            <span class="input-group-text">Code :</span>
-            <input type="text" aria-label="First name"  placeholder="T: " class="form-control t">
-            <input type="text" aria-label="Last name" placeholder="CC:" class="form-control cc ">
-            <input type="text" aria-label="Last name" placeholder="In: " class="form-control in">
-            </div>
-            <div class="alert-confirme-code" > </div>
-            </div>
-            
-            <div class="modal-footer">
-            <div class="btn-group shadow-sm" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-success confirme-code btn-sm " id_tccin="'.base64_encode($this->resultat_tccin).'" form_id="'.base64_encode($this->select_info["id_recrute"]).'">Confirme code <i class="fa-solid fa-check"></i></button>
-            <button type="button" class="btn btn-primary reload-code btn-sm " id_tccin="'.base64_encode($this->resultat_tccin).'"  form_id="'.base64_encode($this->select_info["id_recrute"]).'"> Relaod code <i class="fa-solid fa-rotate-right"></i></button>
-            </div>
-            
-            </div>
-            <div class="alert-reload-code " role="">  </div>
-            </div>';
+    $_confirme_email ='<div class="modal-header">
+    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Confirme E-mail</h1>
+    <button type="button" class="btn-close btn-info-r-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+    <div class="input-group">
+    <span class="input-group-text">Code :</span>
+    <input type="text" aria-label="First name"  placeholder="T: " class="form-control t">
+    <input type="text" aria-label="Last name" placeholder="CC:" class="form-control cc ">
+    <input type="text" aria-label="Last name" placeholder="In: " class="form-control in">
+    </div>
+    <div class="alert-confirme-code" > </div>
+    </div>
+    
+    <div class="modal-footer">
+    <div class="btn-group shadow-sm" role="group" aria-label="Basic mixed styles example">
+    <button type="button" class="btn btn-success confirme-code btn-sm " id_tccin="'.base64_encode($this->resultat_tccin).'" form_id="'.base64_encode($this->select_info["id_recrute"]).'">Confirme code <i class="fa-solid fa-check"></i></button>
+    <button type="button" class="btn btn-primary reload-code btn-sm " id_tccin="'.base64_encode($this->resultat_tccin).'"  form_id="'.base64_encode($this->select_info["id_recrute"]).'"> Relaod code <i class="fa-solid fa-rotate-right"></i></button>
+    </div>
+    
+    </div>
+    <div class="alert-reload-code " role="">  </div>
+    </div>';
     return $_confirme_email;
  }
  public function recrutor_insert($__db){
@@ -130,9 +132,6 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
     $_message .="CC : ".$this->CC." , </br> </hr>";
     $_message .="IN : ".$this->IN."</br> </hr>";
 
-    
-   
-
     //$contenumail,$pmail,$pform,$psujet,$ptitle,$piedpage, $pdonnearray, $commentmail
     $_array_donne = array("r_id"=>base64_encode($_rst["id_recrute"])  ,"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]);
     $info_compagny = $_rst['info_company_recrute'] ;
@@ -145,20 +144,20 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
 $_array_preg = array($email, $compagny);
 $_count_preg = count($_array_empty);
 
-for($i = 0; $i<=$_count_preg-1; $i++){
-          $_array_preg[$i]= preg_replace('#[^a-zA-z0-9=@._-]#i','', $_array_preg[$i]);
-}
+        for($i = 0; $i<=$_count_preg-1; $i++){
+                $_array_preg[$i]= preg_replace('#[^a-zA-z0-9=@._-]#i','', $_array_preg[$i]);
+        }
 
-    $_array_empty = array($email, $compagny);
-    $value = array("E-mail !!!","The Name Company !!!");
-    $_count_array = count($_array_empty);
+            $_array_empty = array($email, $compagny);
+            $value = array("E-mail !!!","The Name Company !!!");
+            $_count_array = count($_array_empty);
 
-for($i = 0; $i<=$_count_array-1; $i++){
-        if(empty($_array_empty[$i])):
-            echo json_encode(array("contenu"=>"Require : $value[$i]","Error"=>0));
-            exit;
-            endif;
-}
+        for($i = 0; $i<=$_count_array-1; $i++){
+                if(empty($_array_empty[$i])):
+                    echo json_encode(array("contenu"=>"Require : $value[$i]","Error"=>0));
+                    exit;
+                    endif;
+        }
 
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)): 
     echo json_encode(array("contenu"=>"Adresse E-mail incorrect !!!","Error"=>0)); exit(); 
@@ -166,7 +165,9 @@ for($i = 0; $i<=$_count_array-1; $i++){
 
 
     $controle_insert_compagny = new url_c_insert_recrutor($email, $compagny); 
-
+    $url_session = new f_session();
+    $url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
+    
     // resultat des donnees    
     $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle($db), 
     "email"=>$controle_insert_compagny->_mail_recrutor,"form_tccin"=>$controle_insert_compagny->form_Confirme_email()); 

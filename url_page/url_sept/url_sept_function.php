@@ -33,7 +33,7 @@ public function sept_progress($_id_recrute,$_link_url,$_db){
        $_count_url_sept = count($array_url_sept);
        $_affiche_progress ='<nav class="navbar  fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm ">
        <div class="container-lg text text-light ">
-       <a class="navbar-brand" href="#">Resume Harouna HAROUNA</a>
+       <a class="navbar-brand" href="#">Resume HAROUNA</a>
        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
        <i class="fa-solid fa-list-ul fa-sm" style="color: #ffffff;"></i>
        </button>
@@ -56,6 +56,9 @@ public function sept_progress($_id_recrute,$_link_url,$_db){
           <a class="nav-link" href="#"> '.$array_url_sept[$i]['title_sept'].' </a></li> ';
           endif; 
         }
+        $_affiche_progress .=  '<li class="nav-item">
+        <a class="nav-link" href="http://'.$_SERVER['HTTP_HOST'].'/sept_url/sign_out"> <i class="fa-solid fa-right-from-bracket fa-xl">  </i> Sign out </a></li> ';
+        
         $_affiche_progress .='</ul> </div> </nav>';
 
   return $_affiche_progress ;
@@ -72,6 +75,27 @@ public function style_background($_url_sept){
     background-image: url("/url_page/image/image_background/'.$_url_sept.'.jpg");
     background-color: #cccccc;
     }
+
+    .padded-multiline { 
+      background: url("/url_page/image/image_contenu/'.$_url_sept.'.jpg");
+      background-size: 100%;
+      background-repeat: no-repeat;
+      max-width: 100%;
+      max-height: 100%;
+      min-height: 400px;
+     
+    }
+    .padded-multiline span { 
+      background-color: black;
+      color: #fff; 
+      display: inline;
+      padding: 0.5rem;
+      
+      /* Needs prefixing */
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
   </style>';
  // 'style="background-image: url("url_page/image/image_background/url_sept_default.jpg"); " ';
 return $style; 
@@ -99,13 +123,13 @@ $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND se
     $select_array =array(":url_link"=>$__url_sept);
     $this->sept_detail=$this->__select($prepare,$select_array,false,$__db);  
     $this->url_sept= $this->sept_detail;
-            $sept_contenu= '<div class="text-link"> <h5>'.$this->url_sept['url_sept'].' : '.$this->url_sept['title_sept'].' </h5>  <i class="fa-brands fa-github fa-lg"></i> link : <a class="" href="https://github.com/hharouna/resumehharouna.git" >   https://github.com/hharouna/resumehharouna.git </a></div></br></hr>'; 
-            $sept_contenu.= "<div class='container bg-light rounded shadow-sm  p-2 '>
-            <div class='row'>"; 
-            $sept_contenu.= "<div class='col-12  col-sm-6 col-md-8 col-lg-8 text-black p-2'>"; 
+            $sept_contenu= '<div class="text-link"> <h5>'.$this->url_sept['url_sept'].' : '.$this->url_sept['title_sept'].' </h5>  <i class="fa-brands fa-github fa-lg"></i> link : <a class=" text text-break" href="https://github.com/hharouna/resumehharouna.git" >   https://github.com/hharouna/resumehharouna.git </a></div></br></hr>'; 
+            $sept_contenu.= "<div class='container   p-2'>
+            <div class='row bg-light  rounded shadow-sm '>"; 
+            $sept_contenu.= "<div class=' rounded col-12  col-sm-6 col-md-8 col-lg-7  text-black  p-2 padded-multiline'>"; 
             $sept_contenu.= $this->url_sept['Contenu_sept']; 
             $sept_contenu.= '</div>'; 
-            $sept_contenu.= '<div class="col-12 col-sm-6  col-md-4 col-lg-4 text-black p-2 ">'; 
+            $sept_contenu.= ' <div class="col-11 col-sm-5  col-md-3 col-lg-4 text-black p-2 mx-1 rounded  ">'; 
             $sept_contenu.= $this->competence($__url_sept,$this->url_sept['title_sept'],$__db); 
             $sept_contenu.= '</div>'; 
             $sept_contenu.= "</div></div>"; 

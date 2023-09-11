@@ -44,7 +44,7 @@ class f_session{
 				
 				$J	        = date('d-m-Y');  //-- date actuelle de la machine 
               	$Jstrtotime = strtotime($J); // valeur du jour actuel en seconde...
-		        $nomsession ='__vetech_formation';
+		        $nomsession ='hharouna';
 				$tempspremis  = $Jstrtotime+(60*60*24) ;
 				$dossier   = "/" ;
 				$domain   = $_domaine ;

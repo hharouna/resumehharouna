@@ -40,7 +40,8 @@ $_HTTP_SERVER= $_SERVER['SERVER_ADR'];
 $_HTTP_HOST= $_SERVER['HTTP_HOST'];
 $_HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 $_HTTP_REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
-require_once("private/private_resume.php");
+//require_once("private/private_resume.php");
+require_once("private/private_db_root.php");
 
 require_once("url_page/url_controle.php");
 require_once("function_php/f_session/f_session.php");
@@ -50,15 +51,14 @@ require_once("url_page/url_construtor/url_foot.php");
 //
 $url_session = new f_session();
 $url_session->session("hharouna",false,$_SERVER['SERVER_NAME']);
-unset($_SESSION['info_recrute']);
-if(isset($_SESSION['info_recrute'])):
+if(isset($_SESSION['E_MAIL'])):
 header("location: http://".$_HTTP_HOST."/sept_url/url_sept_1/".base64_encode($_SESSION['info_recrute']['id_recrute'])); 
 endif;
 
 $url_head = new url_head($_HTTP_HOST);
-$url_body = new url_body();
+$url_body = new url_body($db);
 $url_foot = new url_foot();
-$url_page = new url_controle($_HTTP_HOST,$_HTTP_USER_AGENT,$dbh);
+$url_page = new url_controle($_HTTP_HOST,$_HTTP_USER_AGENT,$db);
 
 
 
