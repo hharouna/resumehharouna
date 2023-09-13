@@ -39,7 +39,7 @@ if($_rst["recrute_active"]==0 && $_rst["f_t"]==$f__t && $_rst["f_cc"]==$f__cc &&
 
           
         if($this->update_recrutre==true):
-
+  
             /*  update modification code t cc in  */
 
             // $_rst_tccin = $this->select_code_t_cc_in;

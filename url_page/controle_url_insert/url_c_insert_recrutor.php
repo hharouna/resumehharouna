@@ -28,7 +28,7 @@ class url_c_insert_recrutor extends __root_mysql{
     }
 
  public function recrutor_controle($db_){
-    //connexion db
+      //connexion db
 /*
 //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
@@ -52,6 +52,7 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
 
    if(empty($_rst)): 
     return $this->recrutor_insert($db_); endif;
+
 
  }
 

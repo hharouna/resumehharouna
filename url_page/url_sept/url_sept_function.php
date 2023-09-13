@@ -124,12 +124,12 @@ $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND se
     $this->sept_detail=$this->__select($prepare,$select_array,false,$__db);  
     $this->url_sept= $this->sept_detail;
             $sept_contenu= '<div class="text-link"> <h5>'.$this->url_sept['url_sept'].' : '.$this->url_sept['title_sept'].' </h5>  <i class="fa-brands fa-github fa-lg"></i> link : <a class=" text text-break" href="https://github.com/hharouna/resumehharouna.git" >   https://github.com/hharouna/resumehharouna.git </a></div></br></hr>'; 
-            $sept_contenu.= "<div class='container   p-2'>
+            $sept_contenu.= "<div class='container p-2'>
             <div class='row bg-light  rounded shadow-sm '>"; 
-            $sept_contenu.= "<div class=' rounded col-12  col-sm-6 col-md-8 col-lg-7  text-black  p-2 padded-multiline'>"; 
+            $sept_contenu.= "<div class=' rounded col-12  col-sm-6 col-md-8 col-lg-8  text-black  p-2 padded-multiline'>"; 
             $sept_contenu.= $this->url_sept['Contenu_sept']; 
             $sept_contenu.= '</div>'; 
-            $sept_contenu.= ' <div class="col-11 col-sm-5  col-md-3 col-lg-4 text-black p-2 mx-1 rounded  ">'; 
+            $sept_contenu.= ' <div class="col-12 col-sm-5  col-md-4 col-lg-4 text-black p-2 rounded  ">'; 
             $sept_contenu.= $this->competence($__url_sept,$this->url_sept['title_sept'],$__db); 
             $sept_contenu.= '</div>'; 
             $sept_contenu.= "</div></div>"; 
@@ -158,19 +158,19 @@ $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AN
       */
       
       
-      $this->_html_type_cat="<div class='container' > ";
-      $this->_html_type_cat.="<div ='text-dark m-2'> <h4>".$url_sept_contenu."</h4> </div>";
-      $this->_html_type_cat.="<div class='row' > ";
-      
+      $this->_html_type_cat="<div class='container rounded shadow-sm  '>";
+      $this->_html_type_cat.="<div class='row  '>";
+      $this->_html_type_cat.="<div class='col-11 col-sm-11 col-md-11 col-lg-11 text-dark mt-1'> <h4>".$url_sept_contenu."</h4> </div>";
+  
       foreach($this->type_cat['fectAll'] as $rs_fe => $_fecthAll){
+
       $this->_html_type_cat.='
-      <div class="col-5 m-1 shadow-sm rounded border border-dark">
-      <h6 class="card-title">'.$_fecthAll['c-title'].'</h6>
-      </div>
-      ';
+      <div class="col-12 col-sm-12 col-md-5 col-lg-5 m-1 shadow-sm rounded border border-dark">
+      <h6 class="card-title">'.ucwords(strtolower($_fecthAll['c-title'])).'</h6></div>';
       }
       $this->_html_type_cat.='</div></div>';
       return $this->_html_type_cat;
+
 }
 
 

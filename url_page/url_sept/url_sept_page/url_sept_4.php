@@ -45,7 +45,7 @@ class url_sept_page extends __root_mysql{
         <div class="card h-100 p-2">
         <div class="text text-primary text-center" ><i class="'.$_fecthAll['c_image'].'"></i> </div>
         <div class="card-body">
-        <h4 class="card-title">'.$_fecthAll['c-title'].' </h4>';
+        <h4 class="card-title">'.ucwords(strtolower($_fecthAll['c-title'])).' </h4>';
         $this->_html.= $this->type_cat_contenu($_fecthAll['id_cathegorie'],$_db);
        
         $this->_html.='</div>
@@ -99,7 +99,11 @@ class url_sept_page extends __root_mysql{
     <textarea class="form-control comment_textarea" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
     </div>
     <hr>
-    <button class="btn btn-primary confirme_comment" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme  comment</button>
+    <div class="container"  style="margin:0px; padding:0px; ">
+    <div class="row">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+    <button class="btn btn-primary confirme_comment form-control" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme  comment</button>
+    </div> </div> </div>
     <div class="alert-comment"></div>
 
     ';

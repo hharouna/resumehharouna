@@ -18,7 +18,7 @@ date : 8/22/2023
 
    p_url construct 
 
-        regroupement de tous les elements de chargement de la page prendall.net
+        regroupement de tous les elements de chargement de la page resumehharouna.net
             -> menu
             -> recherche
             -> session de connection
