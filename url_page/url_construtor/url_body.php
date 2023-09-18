@@ -121,7 +121,7 @@ public function information_($__db){
     $information .=  "Birth      : ".$select_info["info_date_brith"]."</br>"; 
     $information .=  "E-mail     : <a href='mailto:'".$select_info["info_mail"]."'?subject=Recreteur:'>".$select_info["info_mail"]."</a></br>"; 
     $information .=  "location   : ".$select_info["info_adresse"]."</br>"; 
-    $information .=  "Pays       : ".$select_info["info_pays"]."</br>"; 
+    $information .=  "Country    : ".$select_info["info_pays"]."</br>"; 
     $information .=  "Color      : ".$select_info["info_Rase"]."</br>"; 
     $information .=  "Creat date : ".$select_info["date_info"]."</br>"; 
 
@@ -148,7 +148,7 @@ public function mail_recrute(){
     <input type="text" aria-label="Last name" placeholder="Company"  class="form-control compagny">
     </div>
     <div class="col-sm-12 pt-2">
-    <button class="btn btn-primary btn-info-recrute form-control" > Confirme  <i class="fa-solid fa-check"></i></button>
+    <button class="btn btn-primary btn-info-recrute form-control" > Confirm  <i class="fa-solid fa-check"></i></button>
     </div> </div> <div class="alert-company"></div></div>
 
     </div>

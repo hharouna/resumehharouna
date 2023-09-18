@@ -41,7 +41,6 @@ class f_session{
 		           
 				session_name($_url_session_name);
 				//
-				
 				$J	        = date('d-m-Y');  //-- date actuelle de la machine 
               	$Jstrtotime = strtotime($J); // valeur du jour actuel en seconde...
 		        $nomsession ='hharouna';

@@ -19,32 +19,10 @@ $(document).ready(function() {
       foot_this.html(resultat["url_foot"])
       }
       })
-      },
-      URL_COOKIES_ACTIVES:function cookies_actives(url_cookies_actives,id_cookies,id_hua,checked_this,this_token){      $.ajax({ 
-      beforeSend: function(){
-      //$("#staticBackdrop").modal("show").addClass(" bg-light ")
-      //$(".modal-body").html(url_animation.url_spinner("dark",true))
-      },
-      url: "../url/url_construct/url_controle/url_controle_cookies.php",
-      type: 'POST', 
-      dataType:"json", 
-      data: {data:"cookies",url_cookies_actives:url_cookies_actives,id_cookies:id_cookies,id_hua :id_hua, token:this_token},  
-      success: function(resultat) {
-
-      if(resultat["url_actives"]==true && url_cookies_actives==1 ){
-      checked_this.removeAttr("checked").attr("url_cookies_actives","0")
       }
-      else if(resultat["url_actives"]==true && url_cookies_actives==0){
-      checked_this.attr("checked","checked").attr("url_cookies_actives","1")
+     
       }
-      else if(resultat["url_actives"]==true && url_cookies_actives==2){
-      checked_this.attr("checked","checked").attr("url_cookies_actives","1")
-      }
-      }
-
-      })
-      }
-      }
+ 
 
       var url_animation = {
       url_spinner : function spinner(color,size,truefalse) {
@@ -83,7 +61,7 @@ $(document).ready(function() {
       }
       }
 
-      $(document).on("click","button.foot", function(){
+      $(document).on("click","a.foot", function(){
 
       var this_btn =$(this)
       var t_f=$(this).attr("truefalse")
@@ -113,7 +91,7 @@ var fun_resume = {
         data: {compagny: compagny ,  email: email},  
         success: function(resultat) {
         if(resultat['Error']==0){
-        $(b_this).html('Confirme <i class="fa-solid fa-check"></i>')
+        $(b_this).html('Confirm <i class="fa-solid fa-check"></i>')
         $("div.alert-company").addClass("alert alert-warning p-2 mt-2 form-control").html(resultat["contenu"])
         }
         else if(resultat['resultat']==true && resultat['r']['r_active']==1){
@@ -145,12 +123,11 @@ var fun_resume = {
       $("input.t").removeAttr("disabled")
       $("input.cc").removeAttr("disabled")
       $("input.in").removeAttr("disabled")
-      $(b_this).html('Confirme code <i class="fa-solid fa-check"></i>')
+      $(b_this).html('Confirm code <i class="fa-solid fa-check"></i>')
       $("div.alert-confirme-code").addClass("alert alert-warning p-1 mt-2").html(resultat["msg"])
       }else{
       window.location.replace(resultat['link']);
       }
-
       }
 
     })
@@ -198,7 +175,7 @@ var fun_resume = {
     data: {form_id:form_id_},  
     success: function(resultat) {
       if(resultat["resultat"]==true){
-      $(".alert-reload-code").html("Reload code success").addClass(" shadow-sm alert alert-success form-control p-1 text text-center").attr('role','alert')
+      $(".alert-reload-code").html("Reload code success").addClass("shadow-sm alert alert-success form-control p-1 text text-center").attr('role','alert')
       $(b_this).html('Relaod code <i class="fa-solid fa-rotate-right"></i>').addClass("alert-primary")
       }else{
       $(".alert-reload-code").html("trying again !!!").addClass("alert alert-danger form-control p-1 text text-center")
@@ -218,21 +195,64 @@ var fun_resume = {
     dataType:"json", 
     data: {comment_val:comment__val,id_recrute:id__recrute,url:_url},  
     success: function(resultat) {
+
       if(resultat["Error"]==0){
       $("div.alert-comment").html(resultat['contenu']).addClass("alert-danger rounded shadow-sm mt-2 p-2 text text-black form-controle")
-      $(b_this).html('Confirme comment <i class="fa-solid fa-rotate-right></i>').addClass("btn-danger")
+      $(b_this).html('Confirm comment <i class="fa-solid fa-rotate-right></i>').addClass("btn-danger")
       }else{
       $("div.return_comment").html(resultat['r']).addClass("alert alert-success mt-3 p-2 text text-black")
-      $(b_this).html('confirme comment <i class="fa-solid fa-rotate-right></i>').addClass("btn btn-primary ").removeClass("btn-danger")
+      $(b_this).html('confirm comment <i class="fa-solid fa-rotate-right></i>').addClass("btn btn-primary ").removeClass("btn-danger")
       $("div.alert-comment").html("resultat['contenu']").removeClass("alert-danger rounded shadow-sm mt-2 p-2 text text-black form-controle")
-
       }
       }
 
     })
-    }
-    
+    },  
+   contract_option : function contract_op(b_this,type_mode,id_c_op,val_cont_op,id_recrute, btn_input_op){
+      $.ajax({ 
+      beforeSend: function(){
+      $(b_this).html(url_animation.url_spinner("light","sm",true))
+      $(btn_input_op).fadeIn('slow',500)
+      },
+      url: "confirme/url_contract_option",
+      type: 'POST', 
+      dataType:"json", 
+      data: {type_mode:type_mode,val_cont_op:val_cont_op,id_c_op:id_c_op ,id_recrute:id_recrute},  
+      success: function(resultat) {
 
+      if(resultat['resultat']==true){
+
+      $(btn_input_op).attr("disabled","disabled").fadeIn("slow",500).addClass('bg-secondary')
+      $(b_this).html('<i class="fa-regular fa-pen-to-square"></i>').removeClass("btn-outline-success btn-contract-option").addClass("btn-outline-primary btn-contract-mod").attr('id_c_op_recrute',resultat['id_c_op_recrute'])
+
+      }else{
+
+      }
+      }
+      })
+      },
+      contract_option_update : function contract_op_update(b_this,type_mode,id_c_op,val_cont_op,id_recrute, btn_input_op, id_c_op_recrute){
+        $.ajax({ 
+          beforeSend: function(){
+          $(b_this).html(url_animation.url_spinner("light","sm",true))
+          $(btn_input_op).fadeIn('slow',500)
+          },
+          url: "confirme/url_contract_update",
+          type: 'POST', 
+          dataType:"json", 
+          data: {type_mode:type_mode,val_cont_op:val_cont_op,id_c_op:id_c_op ,id_recrute:id_recrute, id_c_op_recrute:id_c_op_recrute},  
+          success: function(resultat) {
+        if(resultat['resultat']==true){
+
+        $(btn_input_op).attr("disabled","disabled").fadeIn("slow",500).addClass('bg-secondary text-light').removeClass('border border-danger border-2 text-black  ')     
+        $(b_this).html('<i class="fa-regular fa-pen-to-square"></i>').removeClass("btn-outline-success btn-contract-option btn-contract-mod-val border-danger").addClass("btn-outline-primary btn-contract-mod")
+
+        }else{
+
+        }
+        }
+        })
+        }
 
 
 }
@@ -281,12 +301,49 @@ var fun_resume = {
       var comment_val= $("textarea.comment_textarea").val()
       var id_recrute= $(this).attr('id_company')
       var url= $(this).attr('url')
-
       fun_resume.confirme_comment(btn_this,comment_val,id_recrute,url)
+
       })
 
+      $(document).on("click","button.btn-contract-mod", function(){
 
-     /* 
+        var val_input=$(this).attr('val_input')
+        var input_op= $("input#valcontratop"+val_input)
+        input_op.removeAttr('disabled').addClass('border border-danger border-2 text-black ').removeClass('bg-secondary text-light');
+        $(this).html('<i class="fa-solid fa-check fa-lg"></i>')
+        .removeClass('btn-contract-mod ')
+        .addClass('btn-contract-mod-val btn-outline-success border border-danger ');
+
+      })
+
+      $(document).on("click","button.btn-contract-option", function(){
+        var btn_this = $(this)
+        var val_input=$(this).attr('val_input')
+        var id_recrute=$(this).attr('id_recrute')
+        var id_contract_option=$(this).attr('val_id')
+        var val_op_contract= $("input#valcontratop"+val_input).val()
+        var input_op= $("input#valcontratop"+val_input)
+        var t_mode =""
+        var url= $(this).attr('url')
+        fun_resume.contract_option(btn_this,t_mode,id_contract_option,val_op_contract,id_recrute,input_op);
+      })
+  
+
+      $(document).on("click","button.btn-contract-mod-val", function(){
+        var btn_this = $(this)
+       
+        //var  val_id_c_op=$(this).attr('val_id_c_op') 
+        var val_input=$(this).attr('val_input') 
+        var val_id_c_op_recrute=$(this).attr('id_c_op_recrute') 
+        var id_recrute=$(this).attr('id_recrute')
+        var id_contract_option=$(this).attr('val_id')
+        var val_op_contract= $("input#valcontratop"+val_input).val()
+        var input_op= $("input#valcontratop"+val_input)
+        var t_mode =""
+        var url= $(this).attr('url')
+        fun_resume.contract_option_update(btn_this,t_mode,id_contract_option,val_op_contract,id_recrute,input_op,val_id_c_op_recrute);
+      })
+/* 
       $(document).on("click","button.btn-info-r-close", function(){
 
         var btn_this = $(this)

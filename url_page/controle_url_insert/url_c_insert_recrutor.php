@@ -142,33 +142,33 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
 }
 
     
-$_array_preg = array($email, $compagny);
-$_count_preg = count($_array_empty);
+        $_array_preg = array($email, $compagny);
+        $_count_preg = count($_array_empty);
 
         for($i = 0; $i<=$_count_preg-1; $i++){
-                $_array_preg[$i]= preg_replace('#[^a-zA-z0-9=@._-]#i','', $_array_preg[$i]);
+                $_array_preg[$i]= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $_array_preg[$i]);
         }
 
             $_array_empty = array($email, $compagny);
             $value = array("E-mail !!!","The Name Company !!!");
             $_count_array = count($_array_empty);
 
-        for($i = 0; $i<=$_count_array-1; $i++){
-                if(empty($_array_empty[$i])):
-                    echo json_encode(array("contenu"=>"Require : $value[$i]","Error"=>0));
-                    exit;
-                    endif;
-        }
+            for($i = 0; $i<=$_count_array-1; $i++){
+            if(empty($_array_empty[$i])):
+            echo json_encode(array("contenu"=>"Require : $value[$i]","Error"=>0));
+            exit;
+            endif;
+            }
 
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)): 
-    echo json_encode(array("contenu"=>"Adresse E-mail incorrect !!!","Error"=>0)); exit(); 
-    endif; 
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)): 
+            echo json_encode(array("contenu"=>"Adresse E-mail incorrect !!!","Error"=>0)); exit(); 
+            endif; 
 
 
-    $controle_insert_compagny = new url_c_insert_recrutor($email, $compagny); 
-    $url_session = new f_session();
-    $url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
-    
+            $controle_insert_compagny = new url_c_insert_recrutor($email, $compagny); 
+            $url_session = new f_session();
+            $url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
+
     // resultat des donnees    
     $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle($db), 
     "email"=>$controle_insert_compagny->_mail_recrutor,"form_tccin"=>$controle_insert_compagny->form_Confirme_email()); 

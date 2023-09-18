@@ -61,15 +61,18 @@ $npath = str_replace('\\', '/', $npath);
 var_dump($npath);
 exit; */
 
+/*----- Ensemble des requieres -----*/
+
 require_once("../../function_php/f_session/f_session.php");
+
 require_once("../../function_php/url_mysql.php");
 
 require_once("../url_construtor/url_head.php");
+
 require_once("../url_construtor/url_foot.php");
+
 require_once("../../private/private_db_root.php"); 
 
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
 
 $id_recrute = base64_decode($url_recrute);
 
@@ -82,7 +85,7 @@ $prepare_recrutre = "SELECT * FROM info_recrute,url_sept WHERE info_recrute.id_r
 $array_recrutre= array("id_recrute"=>$id_recrute);
 $select_recrutre = $url_mysql->__select($prepare_recrutre,$array_recrutre,false,$db); 
 
-if($_SESSION['E_MAIL']!=$select_recrutre['info_email'] ||  $select_recrutre==false):
+if($_SESSION['E_MAIL']!=$select_recrutre['info_email'] ||  $select_recrutre==false || !file_exists("url_sept_page/$url_sept.php")):
 
  unset($_SESSION['E_MAIL']);
  unset($_SESSION['info_recrute']); 
@@ -97,8 +100,9 @@ endif;
 $_SESSION['info_recrute'] = $select_recrutre;
 //var_dump($_SESSION['info_recrute']);
 //$_SESSION['harouna']="harouna";
+
 $url_head = new url_head($_HTTP_HOST);
-$url_foot = new url_foot();
+$url_foot = new url_foot($id_recrute,$url_sept,$db,$url_mysql);
 
 
 
@@ -130,9 +134,9 @@ echo $url_page->contenu($dbh);
 
 $url_sept_page= $url_head->_url_head;
 if(isset($url_sept)&& $select_recrutre==true):
-   require_once("url_sept_page/$url_sept.php");
+ require_once("url_sept_page/$url_sept.php");
   
-   require_once("url_sept_function.php");
+ require_once("url_sept_function.php");
    
  $url_html_sept = new url_sept_page(); 
  $url_sept_function = new url_sept_function($url_sept);

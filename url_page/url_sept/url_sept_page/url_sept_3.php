@@ -9,7 +9,7 @@ class url_sept_page extends __root_mysql{
 
     public $_html, $type_cat_cont; 
 
-  public $type_cat, $select_comment;
+  public $type_cat, $select_comment, $_option_hacking;
     public function __construct()
     {
         
@@ -27,9 +27,12 @@ class url_sept_page extends __root_mysql{
         $count= count($this->type_cat);
 
         //function sept url_sept_N
-        $this->_html = '<div class="container-lg shadow-sm rounded bg-dark text-light mb-3 p-3" > 
+        $this->_html ='<div class="container-lg h-100 text rounded text-light bg-danger shadow-sm my-2 p-2">';
+        $this->_html.=$this->option_hacking($_db);
+        $this->_html.='</div>';
+        $this->_html.= '<div class="container-lg shadow-sm rounded bg-dark text-light mb-3 p-3" > 
         <div class="row row-cols-1 row-cols-md-4 g-4 text-black">';
-
+ 
 
         /*
 
@@ -52,6 +55,7 @@ class url_sept_page extends __root_mysql{
         </div>
         </div>';
         }
+       
         $this->_html.='</div>';
 
 
@@ -70,47 +74,66 @@ class url_sept_page extends __root_mysql{
 
         $prepare = "SELECT * FROM contenu_type_cathegorie WHERE id_t_cat =$id_type_cat ";
         $sth = $__db->query($prepare);
+
         /*
         $select_array_cont =array(":id_t_cat"=>$id_type_cat);
         $this->type_cat_cont=$this->__select($prepare,$select_array_cont,true,$__db); 
          */
-      $_contenu= '<ul class="list-group list-group-flush">';
-      foreach( $sth as  $_fecthAll_cat){    
-      $_contenu.='<li class="list-group-item" contenu_id="'.$_fecthAll_cat['id_c_type_cat'].'"  cathegorie_id="'.$_fecthAll_cat['id_t_cat'].'" >'.$_fecthAll_cat['contenu_type'].'</li>';
-      } 
-      $_contenu.="</ul>";
-      return $_contenu;
 
+        $_contenu= '<ul class="list-group list-group-flush">';
+        foreach( $sth as  $_fecthAll_cat){    
+        $_contenu.='<li class="list-group-item" contenu_id="'.$_fecthAll_cat['id_c_type_cat'].'"  cathegorie_id="'.$_fecthAll_cat['id_t_cat'].'" >'.$_fecthAll_cat['contenu_type'].'</li>';
+        } 
+        $_contenu.="</ul>";
+        return $_contenu;
 
-     
       }
     
+    public function option_hacking($__db){
+      $prepare = "SELECT * FROM option_hacking";
+      $select_array =array();
+      $this->_option_hacking=$this->__select($prepare,$select_array,false,$__db);
+      $_option_hacking = "<div class='container'>"; 
+      $_option_hacking .= "<div class='row'>"; 
+      $_option_hacking .= "<div class='col-12 col-sm-12 col-md-6 col-lg-6'> <h4>"; 
+      $_option_hacking .= $_SESSION['info_recrute']['info_company_recrute'].", Would you like me to run a penetration test with a report.
+      please send me the ipv4 address or the website." ;
+      $_option_hacking .= "</h4></div>";
+
+      $_option_hacking .= "<div class='col-12 col-sm-12 col-md-6 col-lg-6 align-middle py-2'>";
+      $_option_hacking .= '<div class="input-group mb-3 align-middle">
+      <input type="text" class="form-control" placeholder="ipv4: '.$_SERVER['REMOTE_ADDR'].' or www.exemple.com" aria-describedby="button-addon2">
+      <button class="btn btn-success" type="button" id="button-addon2"> Confirm <i class="fa-solid fa-unlock-keyhole fa-lg"></i></button>
+    </div>';
+      $_option_hacking .= "</div></div></div>";
+      return  $_option_hacking ;
+      
+    }
 
 
+    public function commentaire_ckeditor($url_sept,$_title_sept,$__db){
+    
+        $next_comment = '<hr > <div class="return_comment">';
+        $next_comment .= $this->affiche_comment($url_sept, $__db);
+        $next_comment .= '</div>';
+        $next_comment .= '<hr><div class="container-lg bg-light mt-3 shadow-sm rounded p-2 ">';
+        $next_comment .='<div class="form-floating">
+        <span class="text text-dark"> <h4>Would you like to say something about the '.$_title_sept.' </h4></span>
+        <textarea class="form-control comment_textarea" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
+        </div>
+        <hr>
+        <div class="container"  style="margin:0px; padding:0px; ">
+        <div class="row">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <button class="btn btn-primary confirme_comment form-control" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme  comment</button>
+        </div> </div> </div>
+        <div class="alert-comment"></div>
 
- public function commentaire_ckeditor($url_sept,$_title_sept,$__db){
- 
-    $next_comment = '<hr > <div class="return_comment">';
-    $next_comment .= $this->affiche_comment($url_sept, $__db);
-    $next_comment .= '</div>';
-    $next_comment .= '<hr><div class="container-lg bg-light mt-3 shadow-sm rounded p-2 ">';
-    $next_comment .='<div class="form-floating">
-    <span class="text text-dark"> <h4>Would you like to say something about the '.$_title_sept.' </h4></span>
-    <textarea class="form-control comment_textarea" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
-    </div>
-    <hr>
-    <div class="container"  style="margin:0px; padding:0px; ">
-    <div class="row">
-    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-    <button class="btn btn-primary confirme_comment form-control" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme  comment</button>
-    </div> </div> </div>
-    <div class="alert-comment"></div>
+        ';
+        $next_comment .='</div> <hr>';
 
-    ';
-    $next_comment .='</div> <hr>';
-
-    return $next_comment;
- }
+        return $next_comment;
+    }
 public function affiche_comment($_url_sept,$___db){
 
       $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND id_sept_comment=:id_sept_comment";

@@ -57,7 +57,6 @@ endif;
 
 $url_head = new url_head($_HTTP_HOST);
 $url_body = new url_body($db);
-$url_foot = new url_foot();
 $url_page = new url_controle($_HTTP_HOST,$_HTTP_USER_AGENT,$db);
 
 
@@ -88,7 +87,7 @@ echo $url_page->contenu($dbh);
 */
 
 
-echo $url_head->_url_head.$url_body->html_body.$url_foot->foot; 
+echo $url_head->_url_head.$url_body->html_body
 
 
 ?>

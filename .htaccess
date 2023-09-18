@@ -4,7 +4,7 @@ RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP_HOST} ^(?:.)?resumehharouna.\.net(?:.*)$ [nc]
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [redirect=301,L]
-# Redirections https vetechdesign.net
+# Redirections https resumehharouna.net
 
 #RewriteEngine On
 #RewriteCond %{HTTP:X-Forwarded-Proto} !https
@@ -18,8 +18,6 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [redirect=301,L]
 #Header set Cache-Control "max-age=2628000, public"
 #</filesMatch> 
 
-
-
 # liste des liens root ajax
 
 
@@ -27,6 +25,8 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [redirect=301,L]
 RewriteRule  ^img/myself$ url_page/image/myself.jpg
 RewriteRule  ^/index$ index.php
 RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_confirme_code$ url_page/controle_url_insert/url_confirme_comment.php [NC,L] 
+RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_contract_option$ url_page/controle_url_insert/url_contract_option.php [NC,L] 
+RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_contract_update$ url_page/controle_url_update/contract_option_update.php [NC,L] 
 RewriteRule ^sept_url/sign_out$ url_page/controle_url_delet/url_sign_out.php [NC,L] 
 RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/([0-9a-zA-Z-=_]+)$ url_page/url_sept/url_sept.php?url_sept=$1&url_recrute=$2 [NC,L] 
 
