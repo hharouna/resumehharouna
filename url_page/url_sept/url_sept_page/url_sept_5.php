@@ -111,7 +111,7 @@ class url_sept_page extends __root_mysql{
         $form_contract ="<div class='container-md shadow-sm rounded mt-3 p-1 text-black bg-light' >";
 
         $form_contract .="<div class='row'>";
-        $form_contract .="<div class='col-12 col-sm-12 col-md-12 col-lg-12 m-2'> <h5 class='text text-center text-danger '>".ucwords($_SESSION['info_recrute']['info_company_recrute']).",
+        $form_contract .="<div class='col-12 col-sm-12 col-md-12 col-lg-12 m-2'> <h5 class='text text-center text-danger '>".ucwords(strtolower($_SESSION['info_recrute']['info_company_recrute'])).",
          Thanks for answer all forms <i class='fa-solid fa-heart fa-lg' style='color: #da0e13;'></i> </h5> </div>";
         $form_contract .="<div class='col-12 col-sm-12 col-md-7 col-lg-7' >";
      
@@ -156,7 +156,7 @@ class url_sept_page extends __root_mysql{
         </div></div>';
             }
 
-        $form_contract .='</div> <div class="col-12 col-sm-12 col-md-4 col-lg-4  text text-black"> <div class=" p-2 border border-dark  mx-2 shadow-sm rounded"> comprendre</div> </div> ';
+        $form_contract .='</div> <div class="col-12 col-sm-12 col-md-4 col-lg-4  text text-black"> <div class=" p-2 bg-danger text text-light mx-2 shadow-sm rounded"> Note Good: I would need sponsor </div> </div> ';
         $form_contract .='</div></div>';
 
         return $form_contract; 
@@ -233,7 +233,7 @@ public function affiche_comment($_url_sept,$___db){
       if(isset($_rst)):
       $r_page ="<div class='container' >"; 
       $r_page .="<div class='row p-4 '>"; 
-      $r_page .="<div class='col-12 bg-success text text-light rounded shadow-sm p-2 mt-2 mb-2 '> <i class='fa-solid fa-heart fa-lg'style='color: #da0e13;'></i> Thanks for your participating ".ucwords($_SESSION['info_recrute']['info_company_recrute'])."</div>"; 
+      $r_page .="<div class='col-12 bg-success text text-light rounded shadow-sm p-2 mt-2 mb-2 '> <i class='fa-solid fa-heart fa-lg'style='color: #da0e13;'></i> Thanks for your participating ".ucwords(strtolower($_SESSION['info_recrute']['info_company_recrute']))."</div>"; 
       foreach($_rst['fectAll'] as $rs_fe => $_fecthAll){
       $r_page .= "<div class='form-control shadow-sm bg-light mt-2 pt-2 pb-2 rounded ' comment_id='".$_fecthAll["id_comment"]."' >"; 
       $r_page .= $_fecthAll["sept_comment"];

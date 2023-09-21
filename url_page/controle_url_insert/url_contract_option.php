@@ -43,27 +43,14 @@ class url_contract_option extends __root_mysql{
         $url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
         $url_contract_option = new url_contract_option();
 
-  $array_val = array($id_c_op,$id_recrute,$val_cont_op);
-  $array_label = array("id_c_op","id_recrute","champe is empty !!!"); 
-  $count_array_val= count($array_val);
-   for($i;$i<=$count_array_val;$i++){
-    if(isset($array_val[$i]) && $id_recrute=$_SESSION['info_recrute']['id_recrute']):
-        $array_val[$i]= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $array_val[$i]);
-    else if(empty($array_val[$i]) && $id_recrute=$_SESSION['info_recrute']['id_recrute']):
-                if($i==2):
-                    return json_encode(array("Error"=>false,'msg'=>"Requiere : "));
-                    exit; 
-                else:
-                    $url_session->f_deconnect("hharouna",true,$_SERVER['SERVER_NAME']);
-                    header("location: https://".$_SERVER['HTTP_HOST']); 
-                    exit; 
-                endif;
-    else:
-                $url_session->f_deconnect("hharouna",true,$_SERVER['SERVER_NAME']);
-                header("location: https://".$_SERVER['HTTP_HOST']); 
-    endif; 
 
-   }
+        $array_val = array($id_c_op,$id_recrute,$val_cont_op, $id_c_op_recrute);
+        $array_label = array("id_c_op","id_recrute","champe is empty !!!"); 
+        $count_array_val= count($array_val);
+        $base_64_id_recrute = base64_decode($id_recrute) ; 
+        for($i = 0; $i<=$_count_preg-1; $i++){
+        $array_val[$i]= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $array_val[$i]);
+        }
 
         echo $url_contract_option->contract_option($db,$id_c_op,$id_recrute,$val_cont_op);
 

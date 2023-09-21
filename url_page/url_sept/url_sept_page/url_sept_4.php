@@ -7,7 +7,7 @@ require_once('../../function_php/url_mysql.php');
 
 class url_sept_page extends __root_mysql{
 
-    public $_html, $type_cat_cont; 
+  public $_html, $type_cat_cont; 
 
   public $type_cat, $select_comment;
     public function __construct()
@@ -19,7 +19,6 @@ class url_sept_page extends __root_mysql{
 
         /*confirmer     */
 
-
         $prepare = "SELECT * FROM sept, type_cathegorie WHERE sept.url_link=:url_link AND sept.id_sept=type_cathegorie.id_sept_cathegorie";
 
         $select_array =array(":url_link"=>$url__sept);
@@ -29,8 +28,6 @@ class url_sept_page extends __root_mysql{
         //function sept url_sept_N
         $this->_html = '<div class="container-lg shadow-sm rounded bg-dark text-light mb-3 p-3" > 
         <div class="row row-cols-1 row-cols-md-4 g-4 text-black">';
-
-
         /*
 
         foreach($_db_root_admin['fectAll'] as $rs_fe => $_fecthAll){
@@ -84,9 +81,6 @@ class url_sept_page extends __root_mysql{
 
      
       }
-    
-
-
 
  public function commentaire_ckeditor($url_sept,$_title_sept,$__db){
  

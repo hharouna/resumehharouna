@@ -48,22 +48,22 @@ class url_contract_option extends __root_mysql{
 
          //$val_cont_op= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $val_cont_op);
 
-        $array_val = array($id_c_op,$id_recrute,$val_cont_op, $id_c_op_recrute);
-        $array_label = array("id_c_op","id_recrute","champe is empty !!!"); 
-        $count_array_val= count($array_val);
-         $base_64_id_recrute = base64_decode($id_recrute) ; 
-         for($i = 0; $i<=$_count_preg-1; $i++){
-            $array_val[$i]= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $array_val[$i]);
+                $array_val = array($id_c_op,$id_recrute,$val_cont_op, $id_c_op_recrute);
+                $array_label = array("id_c_op","id_recrute","champe is empty !!!"); 
+                $count_array_val= count($array_val);
+                $base_64_id_recrute = base64_decode($id_recrute) ; 
+                for($i = 0; $i<=$_count_preg-1; $i++){
+                $array_val[$i]= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $array_val[$i]);
 
                 }
-               
-                    if(empty($val_cont_op)):
-                    echo json_encode(array("contenu"=>"Require : $value[$i]","Error"=>0));
-                    exit;
-                    endif;
+            
+                if(empty($val_cont_op)):
+                echo json_encode(array("contenu"=>"Require : $value[$i]","Error"=>0));
+                exit;
+                endif;
 
-                    echo $url_contract_option->contract_option($db,$id_c_op,$id_recrute,$val_cont_op, $id_c_op_recrute);
-                    exit; 
+                echo $url_contract_option->contract_option($db,$id_c_op,$id_recrute,$val_cont_op, $id_c_op_recrute);
+                exit; 
 
 
 

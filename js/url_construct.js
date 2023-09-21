@@ -11,7 +11,7 @@ $(document).ready(function() {
       beforeSend: function(){
       foot_this.html(url_animation.url_spinner("light",true))
       },
-      url: "../url/url_construct/url_page/url_page_foot.php",
+      url: "confirme/url_page_foot",
       type: 'POST', 
       dataType:"json", 
       data: {token:foot_token},  
@@ -55,7 +55,7 @@ $(document).ready(function() {
       }
       f_this.addClass("bg-secondary shadow-sm m-1 p-1 rounded text-light")
       f_this.css({
-      "min-height": "300px"
+      "max-height": "400px"
       })
 
       }
@@ -252,7 +252,30 @@ var fun_resume = {
         }
         }
         })
-        }
+        }, 
+        test_ipv4 : function test_ip(b_this, val_ipv4,  id_ipv4_recrute){
+          $.ajax({ 
+            beforeSend: function(){
+            $(b_this).html(url_animation.url_spinner("light","sm",true))
+            $("input.test_ipv4").fadeIn('slow',500)
+            },
+            url: "confirme/url_test_ipv4",
+            type: 'POST', 
+            dataType:"json", 
+            data: { val_ipv4:val_ipv4,  id_ipv4_recrute:id_ipv4_recrute},  
+            success: function(resultat) {
+          if(resultat['resultat']==true){
+  /*
+          $("input.test_ipv4").attr("disabled","disabled").fadeIn("slow",500).addClass('bg-secondary text-light').removeClass('border border-danger border-2 text-black  ')     
+          $(b_this).html('<i class="fa-regular fa-pen-to-square"></i>').removeClass("btn-outline-success btn-contract-option btn-contract-mod-val border-danger").addClass("btn-outline-primary btn-contract-mod")
+  */
+          }else{
+  
+          }
+          }
+          })
+          }
+  
 
 
 }
@@ -297,13 +320,21 @@ var fun_resume = {
 
       $(document).on("click","button.confirme_comment", function(){
 
-      var btn_this = $(this)
-      var comment_val= $("textarea.comment_textarea").val()
-      var id_recrute= $(this).attr('id_company')
-      var url= $(this).attr('url')
-      fun_resume.confirme_comment(btn_this,comment_val,id_recrute,url)
+        var btn_this = $(this)
+        var comment_val= $("textarea.comment_textarea").val()
+        var id_recrute= $(this).attr('id_company')
+        var url= $(this).attr('url')
+        fun_resume.confirme_comment(btn_this,comment_val,id_recrute,url)
+  
+        })
+         $(document).on("click","button.btn-test-ipv4", function(){
 
-      })
+          var btn_this = $(this)
+          var val_test_ipv4= $("input.test_ipv4").val()
+          var id_ipv4_recrute= $(this).attr('id_ipv4_recrute')
+          fun_resume.test_ipv4(btn_this,val_test_ipv4,id_ipv4_recrute)
+    
+          })
 
       $(document).on("click","button.btn-contract-mod", function(){
 

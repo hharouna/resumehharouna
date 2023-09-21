@@ -9,10 +9,7 @@ public function __construct($_sept_url_N)
    // return $this->sept_controle($_sept_url_N); 
 }
 public function sept_progress($_id_recrute,$_link_url,$_db){
-   
-    //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-    //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-/**/
+
     $prepare = "SELECT * FROM info_recrute, url_sept WHERE info_recrute.id_recrute=:id_recrute  AND info_recrute.id_recrute=url_sept.url_id_info_recrute ";    $select_array =array(":id_recrute"=>$_id_recrute);
     $this->progress_url=$this->__select($prepare,$select_array,false,$_db);  
 
@@ -48,7 +45,7 @@ public function sept_progress($_id_recrute,$_link_url,$_db){
           endif; 
           if($_array_sept[$i]==1): 
           $_affiche_progress .= '<li class="nav-item text text-light">
-          <a class="nav-link '.$active.'" href="http://'.$_SERVER['HTTP_HOST'].'/sept_url/'.$array_url_sept[$i]['url_link'].'/'.base64_encode($_id_recrute).'">  
+          <a class="nav-link '.$active.'" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/'.$array_url_sept[$i]['url_link'].'/'.base64_encode($_id_recrute).'">  
           '.$array_url_sept[$i]['title_sept'].' </a> 
           </li> ';
           else:
@@ -57,7 +54,7 @@ public function sept_progress($_id_recrute,$_link_url,$_db){
           endif; 
         }
         $_affiche_progress .=  '<li class="nav-item">
-        <a class="nav-link" href="http://'.$_SERVER['HTTP_HOST'].'/sept_url/sign_out"> <i class="fa-solid fa-right-from-bracket fa-xl">  </i> Sign out </a></li> ';
+        <a class="nav-link" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/sign_out"> <i class="fa-solid fa-right-from-bracket fa-xl">  </i> Sign out </a></li> ';
         
         $_affiche_progress .='</ul> </div> </nav>';
 
@@ -112,10 +109,6 @@ public function html_sept($_url_sept,$_db){
 
 public function sept_controle($__url_sept,$__db){
 
-  /*confirmer    
-//$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
- */
 
 
 $prepare = "SELECT * FROM sept, sept_detail WHERE sept.url_link=:url_link AND sept.id_sept=sept_detail.id_sept_d";

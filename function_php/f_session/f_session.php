@@ -64,29 +64,40 @@ class f_session{
         
         
     }
-    public function f_deconnet_(){
+    public function f_deconnect_($_url_session_name,$true_false,$_domain){
         /*
            deconnexion page
         */
         
-        session_name('__vetech_formation');
-				session_unset($_SESSION);
-				session_destroy();
-				session_write_close();
-				$J	        = date('d-m-Y');  //-- date actuelle de la machine 
-              	$Jstrtotime = strtotime($J); // valeur du jour actuel en seconde...
-		        $nomsession ='__vetech_formation';
-				$tempspremis  = $Jstrtotime+(60*60*24) ;
-				$dossier   = "/" ;
-				$domain   = "" ;
-				$https  =  false; //isset($_SERVER['HTTPS'] );
-				$httponly  = true; 
-				//session_start();// demarrage de la session start
-				 
-				if(session_id() == '') {
-						 session_start();
-						}
-						session_regenerate_id(true); // changer la valeur de ID  DU COOKIE
+            session_name($_url_session_name);
+				
+            $J	        = date('d-m-Y');  //-- date actuelle de la machine 
+            $Jstrtotime = strtotime($J); // valeur du jour actuel en seconde...
+            $nomsession =$_url_session_name;
+            $tempspremis  = $Jstrtotime+(60*60*24) ;
+            $dossier   = "/" ;
+            $domain   = "" ;
+            $https  =  $true_false; //isset($_SERVER['HTTPS'] );
+            $httponly  = $true_false; 
+            //session_start();// demarrage de la session start
+
+            if(session_id() == '') {
+            session_start();
+            }else{
+            session_start(); 
+            }
+            $old_sessid = session_id();
+            session_regenerate_id(true);
+            session_unset($_SESSION);
+            session_destroy($old_sessid);
+            //session_set_cookie_params($tempspremis,$dossier,$domain,$https,$httponly);// parametre de sécurité de session 
+            session_write_close();
+
+
+
+                    
+
+						; // changer la valeur de ID  DU COOKIE
         
     }
     

@@ -9,18 +9,18 @@ public $_sept_html, $sept_detail, $url_sept;
 public function __construct($__id_recrute,$__link_url,$__db,$_sql)
 {
 $this->foot ='<div class=" fixed-bottom container-fluid shadow-sm mt-2 p-2 bg-dark text text-light" ><div class="container-fluid cookies-foot">
-<div class="container-md  ">  
+<div class="container-fluid">  
 </div> </div>';
-$this->foot .="<div class='container-lg' > 
+$this->foot .="<div class='container-fluid' > 
 <div class='row' >
 
-<div class='col-12 col-sm-12 col-md-6 col-lg-6'>";
+<div class='col-12 col-sm-12 col-md-6 col-lg-6 mb-1'>";
 $this->foot.=$this->sept_progress_nav($_SESSION['info_recrute']['id_recrute'],$__link_url,$__db,$_sql);
 $this->foot.="</div>";
 $this->foot.="<div class='col-12 col-sm-12 col-md-4 col-lg-4'>";
 $this->foot.="<h6 class='text text-secondary'> <i class='fa-solid fa-copyright'></i> Copyright 2018-".date("Y")." HAROUNA HAROUNA  </h6> </div>
 </div> ";
-$this->foot .='<div class=" foot_cont  opacity-75 " style="display: none; widht: 400px;"> 
+$this->foot .='<div class=" foot_cont  opacity-75 overflow-auto " style="display: none; widht: 100px;"> 
 </div> </div></div></div> </div>';
 
 
@@ -29,13 +29,10 @@ $this->foot .='<div class=" foot_cont  opacity-75 " style="display: none; widht:
 
 public function sept_progress_nav($_id_recrute,$_link_url,$_db,$__sql){
    
-  //$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-  //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-/**/
+
   $prepare = "SELECT * FROM info_recrute, url_sept WHERE info_recrute.id_recrute=:id_recrute  AND info_recrute.id_recrute=url_sept.url_id_info_recrute ";    
   $select_array =array(":id_recrute"=>$_id_recrute);
   $this->progress_url=$__sql->__select($prepare,$select_array,false,$_db);  
-
 
   $prepare_sept = "SELECT * FROM sept";    
   $select_array =array();
@@ -51,10 +48,10 @@ public function sept_progress_nav($_id_recrute,$_link_url,$_db,$__sql){
   }
 
      $_count_url_sept = count($array_url_sept);
-     $_affiche_progress ='<div class="container">';
+     $_affiche_progress ='<div class="container-fluid" style="margin-left:0px; padding-left:0px;  ">';
      $_affiche_progress .='<div class="row">';
-     $_affiche_progress .="<div class='btn-group'>
-<a class=' btn foot btn-primary  rounded' truefalse='false'> <i class='fa-sharp fa-solid fa-circle-up'></i> </a>
+     $_affiche_progress .="<div class='btn-group rounded'>
+<a class=' btn  btn-primary  foot' truefalse='false'> <i class='fa-sharp fa-solid fa-circle-up'></i> </a>
 ";
       for($i=0;$i<=$_count_sept-1;$i++){ 
         if($_link_url==$array_url_sept[$i]['url_link']):
@@ -67,14 +64,14 @@ public function sept_progress_nav($_id_recrute,$_link_url,$_db,$__sql){
         if($_array_sept[$i]==1): 
         $_affiche_progress .= '
         <a class="btn btn-'.$btn_active.' 
-        '.$active.'" href="http://'.$_SERVER['HTTP_HOST'].'/sept_url/'.$array_url_sept[$i]['url_link'].'/'.base64_encode($_id_recrute).'">  
+        '.$active.'" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/'.$array_url_sept[$i]['url_link'].'/'.base64_encode($_id_recrute).'">  
         '.$_array_btn[$i].' </a> ';
         else:
         $_affiche_progress .='<a class="btn btn-primary" href="#"> '.$_array_btn[$i].' </a> ';
         endif; 
       }
       $_affiche_progress .='
-      <a class="btn btn-dark nav-link" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/sign_out"> <i class="fa-solid fa-right-from-bracket fa-xl">  </i> </a>  </div> ';
+      <a class="btn btn-primary" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/sign_out"> <i class="fa-solid fa-right-from-bracket fa-sm">  </i> </a>  </div> ';
       
       $_affiche_progress .=' </div> </div>';
 
