@@ -102,7 +102,7 @@ class url_sept_page extends __root_mysql{
     <div class="container"  style="margin:0px; padding:0px; ">
     <div class="row">
     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-    <button class="btn btn-primary confirme_comment form-control" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme  comment</button>
+    <button class="btn btn-primary confirme_comment form-control" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirm  comment</button>
     </div> </div> </div>
     <div class="alert-comment"></div>
 
