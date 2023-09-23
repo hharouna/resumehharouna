@@ -100,7 +100,7 @@ class url_sept_page extends __root_mysql{
       please send me the ipv4 address or the website." ;
       $_option_hacking .= "</h4></div>";
 
-      $_option_hacking .= "<div class='col-12 col-sm-12 col-md-6 col-lg-6 align-middle py-2'>";
+      $_option_hacking .= "<div class='col-12 col-sm-12 col-md-6 col-lg-6 align-middle py-2 all_table_ipv4'>";
       $_option_hacking .= $this->test_ipva4($__db);
       $_option_hacking .= "</div></div></div></div>";
       return  $_option_hacking ;
@@ -112,40 +112,52 @@ class url_sept_page extends __root_mysql{
 
       $select_array =array(":id_test_recrute"=>$_SESSION['info_recrute']['id_recrute']);
       $this->_test_ipv4=$this->__select($prepare,$select_array,true,$___db);  
-
+      
        
-        $r_test_ipv4="<div class='container'>";
-        $r_test_ipv4.="<div class='row'>";
-        $r_test_ipv4.="<div class='col-12 col-sm-12 col-md-12 col-lg-12 mx-2 my-2'> ";
-        $r_test_ipv4.='<div class="shadow-sm text text-light bg-dark p-2 rounded">';
-        $r_test_ipv4.='<table class="table bg-light">
-        <thead>
-        <tr>
-        <th scope="col">ipv4 or website</th>
-        <th scope="col">Delete</th>
-        </tr> </thead>';
-      foreach($this->_test_ipv4['fectAll'] as $rs_fe => $_fecthAll){
-        $r_test_ipv4.='
-              <tbody>
-              <tr>
-              <td>'.$_fecthAll['test_ipv4'].'</td>
-              <td><button class="btn btn-danger btn-sm" id_test_ipv4="'.base64_encode($_fecthAll['id_test']).'" id_test_recrute="'.base64_encode($_fecthAll['id_test_recrute']).'"><i class="fa-solid fa-trash fa-sm"></i> </button></td>
-              </tr>
-              </tbody>';
-      }
+      $r_test_ipv4="<div class='container' style='margin:0px; padding:0px;'>";
+      $r_test_ipv4.="<div class='row'>";
+      $r_test_ipv4.="<div class='col-12 col-sm-12 col-md-12 col-lg-12 my-2'> ";
+      $r_test_ipv4.='<div class="shadow-sm text text-light bg-dark p-2 rounded ">';
+      $r_test_ipv4.='<div class=" r_table_ipv4">';
+      $r_test_ipv4.='<table class="table bg-light">
+      <thead>
+      <tr>
+      <th scope="col">ipv4 or website</th>
+      <th scope="col">Delete</th>
+      </tr> </thead>';
+      $r_test_ipv4.='<tbody >';
 
-        $r_test_ipv4.= '</table>';
-        $r_test_ipv4.="</div></div> <div class='col-12 col-sm-12 col-md-12 col-lg-12 mx-2'>";
-        $r_test_ipv4.='<div class="input-group mb-3 align-middle">';
-        $r_test_ipv4.='<input type="text" class="form-control test_ipv4" placeholder="ipv4: '.$_SERVER['REMOTE_ADDR'].' or www.exemple.com" aria-describedby="button-addon2">
-        <button class="btn btn-success btn-sm  btn-test-ipv4" id_ipv4_recrute="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'" type="button" id="button-addon2"> Confirm <i class="fa-solid fa-unlock-keyhole fa-sm"></i></button>
-        </div></div></div>';
+      foreach($this->_test_ipv4['fectAll'] as $rs_fe => $_fecthAll){
+      $r_test_ipv4.='
+      <tr class="'.$this->base64url_encode($_fecthAll['id_test']).'">
+      <td>'.$_fecthAll['test_ipv4'].'</td>
+      <td><button class="btn btn-danger btn-sm btn-delete-ipv4" title="Delete"  id_test_ipv4="'.base64_encode($_fecthAll['id_test']).'" id_test_recrute="'.base64_encode($_fecthAll['id_test_recrute']).'" ><i class="fa-solid fa-trash fa-sm"></i> </button></td>
+      </tr>
+      ';
+        }
+
+      $r_test_ipv4.= '</tbody></table> </div>';
+      $r_test_ipv4.="</div></div> <div class='col-12 col-sm-12 col-md-12 col-lg-12 '>";
+      $r_test_ipv4.='<div class="input-group mb-3 align-middle">';
+      $r_test_ipv4.='<input type="text" class="form-control test_ipv4" placeholder="ipv4: '.$_SERVER['REMOTE_ADDR'].' or www.exemple.com" aria-describedby="button-addon2">
+      <button class="btn btn-success btn-sm  btn-test-ipv4" title="Confirm" id_ipv4_recrute="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'" type="button" id="button-addon2"> Confirm <i class="fa-solid fa-unlock-keyhole fa-sm"></i></button>
+      </div> <div class="alert-ipv4"> </div> </div></div>';
+
+
       return $r_test_ipv4;
     }
+    
+
+      public function base64url_encode($data) {
+
+      return rtrim(base64_encode($data),'=');
+
+      }
+
 
 
     public function commentaire_ckeditor($url_sept,$_title_sept,$__db){
-    
+        $_SESSION['title_sept']= $_title_sept;
         $next_comment = '<hr > <div class="return_comment">';
         $next_comment .= $this->affiche_comment($url_sept, $__db);
         $next_comment .= '</div>';
@@ -158,7 +170,7 @@ class url_sept_page extends __root_mysql{
         <div class="container"  style="margin:0px; padding:0px; ">
         <div class="row">
         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-        <button class="btn btn-primary confirme_comment form-control" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirme  comment</button>
+        <button class="btn btn-primary confirme_comment form-control" url="'.$url_sept.'" id_company="'.base64_encode($_SESSION['info_recrute']['id_recrute']).'"> Confirm  comment</button>
         </div> </div> </div>
         <div class="alert-comment"></div>';
         $next_comment .='</div> <hr>';

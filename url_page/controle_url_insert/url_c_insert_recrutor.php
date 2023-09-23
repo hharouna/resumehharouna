@@ -29,10 +29,7 @@ class url_c_insert_recrutor extends __root_mysql{
 
  public function recrutor_controle($db_){
       //connexion db
-/*
-//$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-$dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-   */
+
     $prepare = "SELECT * FROM info_recrute WHERE info_email=:info_email";
 
     $select_array =array(":info_email"=>$this->_mail_recrutor);
@@ -53,7 +50,6 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
    if(empty($_rst)): 
     return $this->recrutor_insert($db_); endif;
 
-
  }
 
  public function select_confirme_code($__db, $__id_recrute){
@@ -63,7 +59,6 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
     $select_array =array(":id_recrutre_tccin"=>$__id_recrute);
     $this->select_tccin =$this->__select($prepare,$select_array,false,$__db);  
     $_rst = $this->select_tccin["id_tccin"];
-
     return  $_rst;
 
  }
@@ -142,12 +137,12 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
 }
 
     
-        $_array_preg = array($email, $compagny);
-        $_count_preg = count($_array_empty);
+            $_array_preg = array($email, $compagny);
+            $_count_preg = count($_array_empty);
 
-        for($i = 0; $i<=$_count_preg-1; $i++){
-                $_array_preg[$i]= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $_array_preg[$i]);
-        }
+            for($i = 0; $i<=$_count_preg-1; $i++){
+            $_array_preg[$i]= preg_replace('#[^a-zA-Z0-9=@._-]#i','', $_array_preg[$i]);
+            }
 
             $_array_empty = array($email, $compagny);
             $value = array("E-mail !!!","The Name Company !!!");
@@ -169,16 +164,16 @@ $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC
             $url_session = new f_session();
             $url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
 
-    // resultat des donnees    
-    $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle($db), 
-    "email"=>$controle_insert_compagny->_mail_recrutor,"form_tccin"=>$controle_insert_compagny->form_Confirme_email()); 
+            // resultat des donnees    
+            $_resultat = array('resultat'=> true, "r"=>$controle_insert_compagny->recrutor_controle($db), 
+            "email"=>$controle_insert_compagny->_mail_recrutor,"form_tccin"=>$controle_insert_compagny->form_Confirme_email()); 
 
 
-    if(isset($email)&& isset($compagny)):
-    echo json_encode($_resultat); 
-    exit; 
-    else:
-    header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
-    endif; 
+            if(isset($email)&& isset($compagny)):
+            echo json_encode($_resultat); 
+            exit; 
+            else:
+            header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
+            endif; 
 
 ?>

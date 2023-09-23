@@ -89,7 +89,7 @@ class url_sept_page extends __root_mysql{
 
 
  public function commentaire_ckeditor($url_sept,$_title_sept,$__db){
- 
+  $_SESSION['title_sept']= $_title_sept;
     $next_comment = '<hr > <div class="return_comment">';
     $next_comment .= $this->affiche_comment($url_sept, $__db);
     $next_comment .= '</div>';

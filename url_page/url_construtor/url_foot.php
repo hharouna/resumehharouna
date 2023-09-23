@@ -64,14 +64,14 @@ public function sept_progress_nav($_id_recrute,$_link_url,$_db,$__sql){
         if($_array_sept[$i]==1): 
         $_affiche_progress .= '
         <a class="btn btn-'.$btn_active.' 
-        '.$active.'" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/'.$array_url_sept[$i]['url_link'].'/'.base64_encode($_id_recrute).'">  
+        '.$active.'" title="'.$array_url_sept[$i]['title_sept'].'" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/'.$array_url_sept[$i]['url_link'].'/'.base64_encode($_id_recrute).'">  
         '.$_array_btn[$i].' </a> ';
         else:
         $_affiche_progress .='<a class="btn btn-primary" href="#"> '.$_array_btn[$i].' </a> ';
         endif; 
       }
       $_affiche_progress .='
-      <a class="btn btn-primary" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/sign_out"> <i class="fa-solid fa-right-from-bracket fa-sm">  </i> </a>  </div> ';
+      <a class="btn btn-primary"  title="Sign Out" href="https://'.$_SERVER['HTTP_HOST'].'/sept_url/sign_out"> <i class="fa-solid fa-right-from-bracket fa-sm">  </i> </a>  </div> ';
       
       $_affiche_progress .=' </div> </div>';
 

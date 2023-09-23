@@ -106,18 +106,19 @@ class __root_mysql{
 
     }
   
-    public function __delete($list_champ, $champ, $condition)
+    public function __delete($_prepare, $array_execute, $_db)
     {
 
-  // function supprimer 
-  
-/* 
-      $sqlselect= $this->con->prepare('SELECT '.$list_champ.' FROM '.$champ.'
-      WHERE  '.$condition );
-      $sqlselect->execute();
-      $count =$sqlselect->rowCount(); 
-      $row = $sqlselect->fetch(); 
-*/
+     // "DELETE FROM contenu_type_cathegorie WHERE `contenu_type_cathegorie`.`id_c_type_cat` = 4"?
+
+      $delete_= $_db->prepare($_prepare);
+      if($delete_->execute($array_execute)){
+            return  true;
+        } else{
+          return false;
+        };
+
+
     }
 
 }

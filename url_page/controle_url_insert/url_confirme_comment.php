@@ -67,8 +67,26 @@ $prepare = "SELECT * FROM sept_commentaire WHERE id_r_comment=:id_r_comment AND 
 
       /* insertion des information company  */
     sleep(2);  
+    $_array_donne = array("r_id"=>base64_encode($_SESSION['info_recrute']['id_recrute'])  ,"r_active"=>$_SESSION['info_recrute']["info_active"], "r_email"=>$_SESSION['info_recrute']["info_email"]);
+    $info_compagny = $_SESSION['info_recrute']['info_company_recrute'] ;
 
-    return $this->resultat_c; 
+        require_once("../../function_php/private_connect/root_mail_sms.php");
+        $_send_mail = new root_mail_sms();
+        $session_tilte = $_SESSION['title_sept'];
+        $_message ="<h3> Hi, $info_compagny. </h3> </br>
+
+        <p> I have received your comment regarding the $session_tilte </p>
+
+        <p> Thank you Mr Harouna </p>
+
+        "; 
+        $r_mail= $_send_mail->cssmail($_message,$_SESSION['info_recrute']["info_email"],"hharouna@resumehharouna.net","Session Ethical Hacking, $info_compagny  by Harouna Harouna", "","resumehharouna.net",$_array_donne,"");
+        if($r_mail==true):
+        return $this->resultat_c; 
+        else:
+        return json_encode(array('resultat'=>false,"msg"=>"Error: Msg de comment !!!"));
+        endif; 
+
 
  }
 

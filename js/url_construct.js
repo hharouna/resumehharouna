@@ -257,7 +257,7 @@ var fun_resume = {
           $.ajax({ 
             beforeSend: function(){
             $(b_this).html(url_animation.url_spinner("light","sm",true))
-            $("input.test_ipv4").fadeIn('slow',500)
+            $("input.test_ipv4").fadeIn('slow',500).addClass("bg-secondary")
             },
             url: "confirme/url_test_ipv4",
             type: 'POST', 
@@ -265,16 +265,47 @@ var fun_resume = {
             data: { val_ipv4:val_ipv4,  id_ipv4_recrute:id_ipv4_recrute},  
             success: function(resultat) {
           if(resultat['resultat']==true){
-  /*
-          $("input.test_ipv4").attr("disabled","disabled").fadeIn("slow",500).addClass('bg-secondary text-light').removeClass('border border-danger border-2 text-black  ')     
-          $(b_this).html('<i class="fa-regular fa-pen-to-square"></i>').removeClass("btn-outline-success btn-contract-option btn-contract-mod-val border-danger").addClass("btn-outline-primary btn-contract-mod")
-  */
+              if(resultat['table_ipv4']['count_ipv4']>1){
+              $('div.r_table_ipv4').html(resultat['table_ipv4']['table_ipv4']).fadeIn("slow",500)
+              } else{
+              $('div.all_table_ipv4').html(resultat['table_ipv4']['table_ipv4']).fadeIn("slow",500)
+              }
+              $("div.alert-ipv4").html("").removeClass('alert alert-danger shadow-sm').removeAttr('role').hide()
+              $("input.test_ipv4").attr('value','').removeClass("bg-secondary")
+              $(b_this).html( 'Confirm <i class="fa-solid fa-unlock-keyhole fa-sm"></i>').removeClass(" btn-danger").addClass('btn-success')
+
           }else{
-  
+
+              $("div.alert-ipv4").html(resultat['msg']).addClass('alert alert-danger shadow-sm').attr('role', 'alert').show(); 
+              $("input.test_ipv4").removeClass("bg-secondary")
+              $(b_this).html( 'Confirm <i class="fa-solid fa-unlock-keyhole fa-sm"></i>').removeClass("btn-success").addClass('btn-danger')
+
           }
           }
           })
-          }
+          }, 
+          delete_test_ipv4 : function delete_ipv4(b_this, idligne_ipv4, id_ipv4_recrute){
+            $.ajax({ 
+              beforeSend: function(){
+               
+              $(b_this).html(url_animation.url_spinner("light","sm",true))
+              },
+              url: "confirme/url_delete_ipv4",
+              type: 'POST', 
+              dataType:"json", 
+              data: { id_ligne_ipv4:idligne_ipv4, id_ipv4_recrute:id_ipv4_recrute},  
+              success: function(resultat) {
+
+                if(resultat['resultat']==true){
+                  $("."+resultat['id']).remove();
+                   $(b_this).remove()
+                   $('input.test_ipv4').val("")
+                }
+               
+
+              }
+            })
+            }
   
 
 
@@ -335,6 +366,15 @@ var fun_resume = {
           fun_resume.test_ipv4(btn_this,val_test_ipv4,id_ipv4_recrute)
     
           })
+         $(document).on("click","button.btn-delete-ipv4", function(){
+         var truefalse=prompt("Confirm : Y OR n")
+         if(truefalse=="Y"){
+            var btn_this = $(this)
+            var id_ligne_ipv4=$(this).attr('id_test_ipv4')
+            var id_ipv4_recrute= $(this).attr('id_test_recrute')
+            fun_resume.delete_test_ipv4(btn_this,id_ligne_ipv4,id_ipv4_recrute)
+            }
+            })
 
       $(document).on("click","button.btn-contract-mod", function(){
 

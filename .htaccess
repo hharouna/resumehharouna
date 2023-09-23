@@ -27,6 +27,7 @@ RewriteRule  ^/index$ index.php
 RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_confirme_code$ url_page/controle_url_insert/url_confirme_comment.php [NC,L] 
 RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_contract_option$ url_page/controle_url_insert/url_contract_option.php [NC,L] 
 RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_test_ipv4$ url_page/controle_url_insert/url_test_ipv4.php [NC,L] 
+RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_delete_ipv4$ url_page/controle_url_delet/url_ipv4_delete.php [NC,L] 
 RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_contract_update$ url_page/controle_url_update/contract_option_update.php [NC,L] 
 RewriteRule ^sept_url/([0-9a-zA-Z_-]+)/confirme/url_page_foot$ url_page/controle_url_page/url_page_foot.php [NC,L] 
 RewriteRule ^sept_url/sign_out$ url_page/controle_url_delet/url_sign_out.php [NC,L] 

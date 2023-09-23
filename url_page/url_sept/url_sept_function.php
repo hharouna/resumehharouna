@@ -31,7 +31,7 @@ public function sept_progress($_id_recrute,$_link_url,$_db){
        $_affiche_progress ='<nav class="navbar  fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm ">
        <div class="container-lg text text-light ">
        <a class="navbar-brand" href="#">Resume HAROUNA</a>
-       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+       <button class="navbar-toggler shadow-sm border border-light border-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
        <i class="fa-solid fa-list-ul fa-sm" style="color: #ffffff;"></i>
        </button>
        <div class="collapse navbar-collapse" id="navbarNav">

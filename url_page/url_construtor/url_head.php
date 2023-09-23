@@ -74,7 +74,6 @@ class url_head{
     $_CSS ='<link rel="stylesheet" href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/css/css/dist/css/bootstrap.css">';
     $_CSS .='<link rel="stylesheet" href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/css/font/css/all.css">';
     $_CSS .='<link class="rounded bg-dark" rel="icon" type="image/png" id="favicon"  href="'.($this->isSecure() ? 'https' : 'http')."://".$URL_HOST.'/url_page/image/myself.png"/>';
-    $_CSS .='<link rel="apple-touch-icon" href="img/myself">';
     return $_CSS;
 
   }
