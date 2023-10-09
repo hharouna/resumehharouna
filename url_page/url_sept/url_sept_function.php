@@ -106,7 +106,7 @@ public function html_sept($_url_sept,$_db){
     $this->_sept_html.='</div>';  
     return $this->_sept_html;
 }
-
+  
 public function sept_controle($__url_sept,$__db){
 
 

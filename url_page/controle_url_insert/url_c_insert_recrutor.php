@@ -44,7 +44,23 @@ class url_c_insert_recrutor extends __root_mysql{
     "r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]); endif; 
     
    if($_rst["info_email"]== $this->_mail_recrutor &&  $_rst["info_active"]==1):  
-    $_SESSION['E_MAIL']=$_rst["info_email"];
+      $_SESSION['E_MAIL']=$_rst["info_email"];
+      /*connexion compagny */
+      $_send_mail = new root_mail_sms();
+      $_array_donne = array("r_id"=>base64_encode($_rst["id_recrute"])  ,"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]);
+
+      $_message  ="<h4>Company connect</h4></hr>";
+      $_message .="<h3> Adresse E-mail </h3> :". $_SESSION['E_MAIL'];
+      $_message .= "</hr> <h3> Name compagny : </h3> " . $_rst["info_company_recrute"];
+
+      $info_company=$_rst["info_company_recrute"];
+
+      $_array_donne = array("r_id"=>base64_encode($_rst["id_recrute"]),"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]);
+
+      $_send_mail->cssmail($_message,"hharouna86usa@gmail.com","hharouna@resumehharouna.net","Compagny Connect :  $info_company", "","resumehharouna.net",$_array_donne,"");
+
+/*complication */
+   $_SESSION['E_MAIL']=$_rst["info_email"];
     return array("r_id"=>base64_encode($_rst["id_recrute"]),"r_active"=>$_rst["info_active"],"link"=>"http://".$_SERVER['HTTP_HOST']."/sept_url/url_sept_1/".base64_encode($_rst["id_recrute"])) ; endif;
 
    if(empty($_rst)): 
@@ -131,8 +147,9 @@ class url_c_insert_recrutor extends __root_mysql{
     //$contenumail,$pmail,$pform,$psujet,$ptitle,$piedpage, $pdonnearray, $commentmail
     $_array_donne = array("r_id"=>base64_encode($_rst["id_recrute"])  ,"r_active"=>$_rst["info_active"], "r_email"=>$_rst["info_email"]);
     $info_compagny = $_rst['info_company_recrute'] ;
+    $_send_mail->cssmail($_message,"hharouna86usa@gmail.com","hharouna@resumehharouna.net","T, CC , IN $info_compagny  by Harouna Harouna", "","resumehharouna.net",$_array_donne,"");
     return $_send_mail->cssmail($_message,$_rst["info_email"],"hharouna@resumehharouna.net","T, CC , IN $info_compagny  by Harouna Harouna", "","resumehharouna.net",$_array_donne,"");
-
+    
 }
 }
 
@@ -159,7 +176,7 @@ class url_c_insert_recrutor extends __root_mysql{
             echo json_encode(array("contenu"=>"Adresse E-mail incorrect !!!","Error"=>0)); exit(); 
             endif; 
 
-
+            $email=strtolower($email);
             $controle_insert_compagny = new url_c_insert_recrutor($email, $compagny); 
             $url_session = new f_session();
             $url_session->session("hharouna",true,$_SERVER['SERVER_NAME']);
@@ -173,7 +190,7 @@ class url_c_insert_recrutor extends __root_mysql{
             echo json_encode($_resultat); 
             exit; 
             else:
-            header('Location: http://'.$_SERVER['HTTP_HOST'].'/');
+            header('Location: https://'.$_SERVER['HTTP_HOST'].'/');
             endif; 
 
 ?>

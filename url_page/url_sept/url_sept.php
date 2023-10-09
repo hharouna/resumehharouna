@@ -64,13 +64,9 @@ exit; */
 /*----- Ensemble des requieres -----*/
 
 require_once("../../function_php/f_session/f_session.php");
-
 require_once("../../function_php/url_mysql.php");
-
 require_once("../url_construtor/url_head.php");
-
 require_once("../url_construtor/url_foot.php");
-
 require_once("../../private/private_db_root.php"); 
 
 

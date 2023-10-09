@@ -16,12 +16,13 @@ $valhostdb="";
 define("HOST_DB","mysql:host=localhost;dbname=c1prendall");
 //USER ET MOT DE PASSE 
 define("HOST_USER","root");
-define("HOST_PASS","eydf-MxkhI@CDC!J");
+define("HOST_PASS","rymACG-K_UiaWWZt");
+autre server : lptDYDSPmk9FOdjW
 */
-define("HOST_DB","mysql:host=localhost;dbname=resumehharouna");
+define("HOST_DB","mysql:host=localhost;dbname=c0resumehharouna");
 //USER ET MOT DE PASSE 
 define("HOST_USER","root");
-define("HOST_PASS","0000001LE@");
+define("HOST_PASS","lptDYDSPmk9FOdjW");
 
 
 class HOST{

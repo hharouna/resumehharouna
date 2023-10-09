@@ -10,7 +10,8 @@ mail_recrute.
 */
 
 
-require_once("../../function_php/url_mysql.php"); 
+require_once("../../private/private_db_root.php"); 
+
 require_once("../../function_php/private_connect/root_mail_sms.php");
 
 
@@ -23,13 +24,13 @@ public function __construct()
   
 
 }
-public function _select_mail($id_re){
+public function _select_mail($id_re,$_db){
   
     //$dbh = new PDO('mysql:host=localhost;dbname=resumehharouna', "root", "0000001LE@");
-    $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "eydf-MxkhI@CDC!J");
-    $prepare = "SELECT * FROM info_recrute, code_t_cc_in WHERE info_recrute.id_recrute=:id_recrute AND  code_t_cc_in.id_recrutre_tccin=:id_recrutre_tccin";
-    $select_array =array(":id_recrute"=>$id_re,":id_recrutre_tccin"=>$id_re);
-    $select_mail =$this->__select($prepare,$select_array,false,$dbh);
+   // $dbh = new PDO('mysql:host=localhost;dbname=c1prendall', "root", "uV2-21RTM_kCv@s");
+    $prepare = "SELECT * FROM info_recrute, code_t_cc_in WHERE info_recrute.id_recrute=:id_recrute AND  info_recrute.id_recrute=code_t_cc_in.id_recrutre_tccin";
+    $select_array =array(":id_recrute"=>$id_re);
+    $select_mail =$this->__select($prepare,$select_array,false,$_db);
 
 
     $_send_mail = new root_mail_sms();
@@ -60,7 +61,7 @@ $decode_base64_form_id= base64_decode($form_id);
 
 $mail_insert_controle = new mail_insert_controle(); 
 
-echo $mail_insert_controle->_select_mail($decode_base64_form_id); 
+echo $mail_insert_controle->_select_mail($decode_base64_form_id, $db); 
 
 
 
