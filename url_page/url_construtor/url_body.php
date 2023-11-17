@@ -169,6 +169,7 @@ public function mail_recrute(){
      <a class="btn btn-danger btn-sm shadow-sm " href="https://resumehharouna.net/sept_url/pdf_create"> <i class="fa-solid fa-download fa-2xl"></i> Download resume PDF </a> </div>
     </div> 
    </div> </div>';
+    $_form_recrute .=$this->chat_action(); 
     $_form_recrute .='</div></div>'; 
 
 //<button class="btn btn-primary btn-info-recrute" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Valider  <i class="fa-solid fa-check"></i></button>
@@ -186,6 +187,28 @@ public function alert_recruteur(){
 
  
 return $_info_recruteur;
+}
+
+
+public function chat_action(){
+ $_chat_action = "<div class='container rounded shadow-sm bg-light border border-danger mt-3' style='max-margin: 200px; '> ";
+ $_chat_action .= "Hi, How are you doing today? </br>";
+ $_chat_action .= "You have three options to browse through the entirety of my resume";
+ $_chat_action .= "<ol class='list-group list-group-numbered'>
+ <li class='list-group-item'>web option.</li>
+ <li class='list-group-item'>option to send to your e-mail address.</li>
+ <li class='list-group-item'>option to download pdf to your machine.</li>
+ </ol>";
+
+ $_chat_action .= "online support <br>";
+ $_chat_action .= "<div class='chat_creat_script'></div>";
+
+ $_chat_action .= "<div class='connexion' number=''><button class='btn btn-secondary btn-md btn-creat-chat my-2' chat='creat'> <i class='fa-regular fa-comments fa-lg'></i> Request to connect with Harouna</button>";
+ $_chat_action .= "</div></div>";
+
+
+ return $_chat_action; 
+
 }
 
 

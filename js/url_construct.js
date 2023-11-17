@@ -305,6 +305,47 @@ var fun_resume = {
 
               }
             })
+            },
+            assistance : function f_assistance(b_this){
+
+              $.ajax({ 
+                beforeSend: function(){
+                 
+                $(b_this).html(url_animation.url_spinner("light","sm",true))
+                },
+                url: "assistance/hharouna",
+                type: 'POST', 
+                dataType:"json", 
+                data: {},  
+                success: function(resultat) {
+  
+              
+                 
+  
+                }
+              })
+
+            }, 
+             assistance_creat : function f_assistance(b_this,chat_creat){
+
+              $.ajax({ 
+                beforeSend: function(){
+                 
+                $(b_this).html(url_animation.url_spinner("light","sm",true))
+                },
+                url: "chat/creat",
+                type: 'POST', 
+                dataType:"json", 
+                data: {chat:chat_creat},  
+                success: function(resultat) {
+                if(resultat['resultat']==true){
+                  $(".chat_creat_script").html(resultat['update']).hide()
+                $(b_this).html(  url_animation.url_spinner("light","sm",true)+'<span role="status">Loading...</span>')
+               .removeClass("btn-creat-chat")     
+                }
+              }
+              })
+
             }
   
 
@@ -414,6 +455,23 @@ var fun_resume = {
         var url= $(this).attr('url')
         fun_resume.contract_option_update(btn_this,t_mode,id_contract_option,val_op_contract,id_recrute,input_op,val_id_c_op_recrute);
       })
+      
+      $(document).on("mousemove","body", function(){
+
+
+        var event_this = $(this)
+     //fun_resume.assistance(event_this)
+
+           } );
+
+
+           
+      $(document).on("click","button.btn-creat-chat", function(){
+      var btn_this= $(this)
+      var chat = $(this).attr('chat')
+      fun_resume.assistance_creat(btn_this,chat)
+      })
+     
 /* 
       $(document).on("click","button.btn-info-r-close", function(){
 

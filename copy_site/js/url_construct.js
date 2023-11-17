@@ -414,6 +414,12 @@ var fun_resume = {
         var url= $(this).attr('url')
         fun_resume.contract_option_update(btn_this,t_mode,id_contract_option,val_op_contract,id_recrute,input_op,val_id_c_op_recrute);
       })
+
+      $(document).on("mousemove","body", function(){
+   alert("ok")
+      } );
+
+
 /* 
       $(document).on("click","button.btn-info-r-close", function(){
 

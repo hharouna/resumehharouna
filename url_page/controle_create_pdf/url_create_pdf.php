@@ -1,9 +1,17 @@
 
 <?php
 
+$_HTTP_SERVER= $_SERVER['SERVER_ADR'];
+$_HTTP_HOST= $_SERVER['HTTP_HOST'];
+$_HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
+$_HTTP_REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
+
+$_array_nav = array('ip_nav'=>$_HTTP_REMOTE_ADDR,"nav"=>$_HTTP_USER_AGENT);
 require_once("../../pdfphp/fpdf.php");
 require_once("../../private/private_db_root.php"); 
 require_once("../../function_php/url_mysql.php"); 
+require_once("../../function_php/private_connect/root_mail_sms.php");
+
 
 class PDF extends FPDF
 {
@@ -130,12 +138,15 @@ public function Footer()
 {
     // Position at 1.5 cm from bottom
     $this->SetY(-15);
+    $this->SetX(12);
     // Arial italic 8
     $this->SetFont('Arial','I',8);
     // Text color in gray
     $this->SetTextColor(128);
     // Page number
-    $this->Cell(0,10,'Page '.$this->PageNo(),0,0,'C');
+    $link = $this->AddLink();
+    //$this->Write(5,'here',$link);
+    $this->Cell(0,12,'Page '.$this->PageNo().'  Date update : '.date("Y-m-d H:i:s")."         Resume Harouna HAROUNA   Site : https://www.resumehharouna.net",0,0,'C');
 }
 
 public function ChapterTitle($num, $label)
@@ -152,27 +163,90 @@ public function ChapterTitle($num, $label)
     // Line break
     $this->Ln(4);
 }
+
+public function about_me($___db){
+    
+    $sql= new __root_mysql(); 
+    $select_c= "SELECT * FROM info_harouna"; 
+    $array_c= array();
+    $rst_c= $sql->__select($select_c,$array_c,false,$___db);
+    $content_label = array($rst_c["info_name"], $rst_c["info_frist_name"], 
+    $rst_c["info_date_brith"], $rst_c["info_mail"], $rst_c["Phone"], $rst_c["info_adresse"], $rst_c["info_ville"], $rst_c["info_pays"] );
+    $_label_ = array("Frist Name :","Last Name :", "Brith :", "E-mail :", "Phone :" , "Adress :", "State :","Country :");
+    $count_label =count($content_label); 
+ 
+    $this->SetFont('Arial','',10);
+    $this->SetTextColor(0,78,134);
+    $this->SetLeftMargin(14);
+    //$this->Image('myself.png',10,6,30);
+    for($i=0;$i<=$count_label;$i++){
+        $this->WriteHTML($_label_[$i].$content_label[$i]);
+        $this->Ln(4);
+    }
+    $this->SetLeftMargin(20);
+    $this->SetMargins(10,5,10); 
+    $this->Ln(4);
+    
+    
+    $this->SetMargins(0,5,0); 
+
+    $this->SetLeftMargin(10);
+    //$this->MultiCell(0,2, $rst_c['Contenu_sept']);
+    // $this->SetLineWidth(0.2);
+    $this->Ln(4);
+   
+}
+public function sept_detail_letter($___db){
+    
+    $sql= new __root_mysql(); 
+    $select_c= "SELECT * FROM sept, sept_detail WHERE sept.id_sept=sept_detail.id_sept_d"; 
+    $array_c= array();
+    $rst_c= $sql->__select($select_c,$array_c,true,$___db);
+
+    $contenu_sept =""; 
+    $this->SetFont('Arial','',16);
+    $this->SetTextColor(0,78,134);
+    $this->SetLeftMargin(14);
+    $this->WriteHTML("<center> <p><h2> Letter</p></h2></center><br>");
+    $this->SetLeftMargin(20);
+    $this->SetMargins(10,5,10); 
+    $this->Ln(4);
+    $this->SetFont('Arial','',12);
+    foreach($rst_c['fectAll'] as $rs_fe => $_fecthAll){
+    $this->Cell(0,6,$_fecthAll['title_sept'],'L',true);
+
+    $this->WriteHTML($_fecthAll['Contenu_sept']);
+    $this->Ln(4);
+    }
+    $this->SetMargins(0,5,0); 
+
+    $this->SetLeftMargin(10);
+    //$this->MultiCell(0,2, $rst_c['Contenu_sept']);
+    // $this->SetLineWidth(0.2);
+    $this->Ln(4);
+   
+}
 public function sept_detail($id_sept, $___db){
     
     $sql= new __root_mysql(); 
     $select_c= "SELECT * FROM sept_detail WHERE id_sept_d=:id_sept_d"; 
     $array_c= array(":id_sept_d"=>$id_sept);
     $rst_c= $sql->__select($select_c,$array_c,false,$___db);
-   
-        $contenu_sept =""; 
-        $this->SetFont('Arial','',12);
-        $this->SetTextColor(0,78,134);
-        $this->SetLeftMargin(14);
-        $this->SetMargins(10,5,10); 
-        $this->SetLeftMargin(20);
 
-        $this->WriteHTML($rst_c['Contenu_sept']);
-        $this->SetMargins(0,5,0); 
+    $contenu_sept =""; 
+    $this->SetFont('Arial','',12);
+    $this->SetTextColor(0,78,134);
+    $this->SetLeftMargin(14);
+    $this->SetMargins(10,5,10); 
+    $this->SetLeftMargin(20);
 
-        $this->SetLeftMargin(10);
-        //$this->MultiCell(0,2, $rst_c['Contenu_sept']);
-        // $this->SetLineWidth(0.2);
-        $this->Ln(4);
+    $this->WriteHTML($rst_c['Contenu_sept']);
+    $this->SetMargins(0,5,0); 
+
+    $this->SetLeftMargin(10);
+    //$this->MultiCell(0,2, $rst_c['Contenu_sept']);
+    // $this->SetLineWidth(0.2);
+    $this->Ln(4);
    
 }
 public function type_cathegorie($id_cat,$___db){
@@ -184,18 +258,18 @@ public function type_cathegorie($id_cat,$___db){
     $rst_cat= $sql->__select($select_cat,$array_cat,true,$___db);
    
     foreach($rst_cat['fectAll'] as $rs_fe => $_fecthAll){
-       // $line_s = $this->WriteHTML("<p>".ucfirst(strtolower($_fecthAll['contenu_type']))."</p> <hr> </br>");
-       
-        $this->Bookmark(ucfirst(strtolower($_fecthAll['contenu_type'])), false, 3, -1);
-        $this->SetFont('Arial','',8);
-        $this->SetTextColor(0,39,76);
-        $this->SetLeftMargin(20);
-        $this->SetMargins(2,5,0);
+    // $line_s = $this->WriteHTML("<p>".ucfirst(strtolower($_fecthAll['contenu_type']))."</p> <hr> </br>");
 
-        $this->Cell(0,8,ucfirst(strtolower($_fecthAll['contenu_type'])));
-        
-        $this->Ln(4);
-      }
+    $this->Bookmark(ucfirst(strtolower($_fecthAll['contenu_type'])), false, 3, -1);
+    $this->SetFont('Arial','',8);
+    $this->SetTextColor(0,39,76);
+    $this->SetLeftMargin(20);
+    $this->SetMargins(2,5,0);
+
+    $this->Cell(0,8,ucfirst(strtolower($_fecthAll['contenu_type'])));
+
+    $this->Ln(4);
+    }
 }
 public function ChapterBody($_num,$__db)
 {
@@ -242,9 +316,8 @@ public function ChapterBody($_num,$__db)
 public function PrintChapter($num, $title, $file,$_db)
 {
         $this->AddPage();
-        //$this->Bookmark($num, false);
-        $this->Bookmark($title, false, 1, -1);
         $this->ChapterTitle($num,$title);
+        $this->Bookmark($title, false, 1, -1);
         $this->ChapterBody($num,$_db);
 }
 
@@ -336,26 +409,90 @@ public function PutLink($URL, $txt)
 
 }
 
-$pdf = new PDF();
+        $pdf = new PDF();
 
-$title = 'RESUME HAROUNA HAROUNA';
-$pdf->SetTitle($title);
-$pdf->SetAuthor('HAROUNA HAROUNA');
+        $title = 'RESUME HAROUNA HAROUNA';
+        $pdf->SetTitle($title);
+        $pdf->SetAuthor('HAROUNA HAROUNA');
 
+
+        $_send_mail = new root_mail_sms();
         $sql_url= new __root_mysql(); 
+        
         $select_sql_ = "SELECT * FROM sept"; 
         $array_sql_= array();
         $rst_sql_= $sql_url->__select($select_sql_,$array_sql_,true,$db);
 
+ /*
+-----------------------------------------------------------------------------------------
+         */
         $r_page ="";
+        $pdf->AddPage();
+        $pdf->Cell(0,5,"About me");
+        $pdf->Bookmark("About me", false, 0,-1);
+        $pdf->about_me($db);
+
+        /*
+-----------------------------------------------------------------------------------------
+         */
+        $pdf->AddPage();
+        $pdf->Bookmark("Letter", false, 0,-1);
+        $pdf->sept_detail_letter($db);
+       // $pdf->Cell(0,5,"Letter");
+ /*
+-----------------------------------------------------------------------------------------
+         */
+        $pdf->Bookmark("Skills", false, 0,-1);
         foreach($rst_sql_['fectAll'] as $rs_fe => $_fecthAll){
         $pdf->PrintChapter($_fecthAll["id_sept"],$_fecthAll["title_sept"],"",$db);
         }
+ /*
+-----------------------------------------------------------------------------------------
+         */
+        $pdf->AddPage();
+        $pdf->Bookmark("Experiences", false, 0,-1);
+        /*
+        ZONE EXPRIENCE 
+        */
+        $pdf->Cell(0,5,"Experiences");
+        /*
+        ------------------
+        */
+        $pdf->AddPage();
+        $pdf->Bookmark("Society or Comminoty", false, 0,-1);
+         /*
+        ZONE Society or Commioty
+        */
+        
+        $pdf->Cell(0,5,"Society or Comminoty");
+        /*
+        ------------------
+        */
+        $pdf->AddPage();
+        $pdf->Bookmark("Educations", false, 0,-1);
+         /*
+        ZONE Educations
+        */
+       
+        $pdf->Cell(0,5,"Educations");
+        /*
+        ------------------
+        */
+        $pdf->AddPage();
+        $pdf->Bookmark("Language ", false, 0,-1);
+         /*
+        language
+        */
+        $pdf->Cell(0,5,"Language");
+        /*
+        ------------------
+        */
+       
+        $_message = "Ip : ".$_HTTP_REMOTE_ADDR."Nav : ".$_HTTP_USER_AGENT; 
+        $_send_mail->cssmail($_message,"hharouna86usa@gmail.com","hharouna@resumehharouna.net","resume resumehharouna", "","resumehharouna.net",$_array_donne,"");
 
-//$pdf->PrintChapter(1,'A RUNAWAY REEF','20k_c1.txt',$db);
-
-$pdf->Output('D',"pdf.pdf");   
-
-
+        $pdf->Output('D',"resumehharouna".date("Y-m-dd H:i:s").".pdf");   
+     
+        
 
 ?>

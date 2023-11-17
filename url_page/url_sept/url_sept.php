@@ -130,24 +130,22 @@ echo $url_page->contenu($dbh);
 
 $url_sept_page= $url_head->_url_head;
 if(isset($url_sept)&& $select_recrutre==true):
- require_once("url_sept_page/$url_sept.php");
-  
- require_once("url_sept_function.php");
-   
- $url_html_sept = new url_sept_page(); 
- $url_sept_function = new url_sept_function($url_sept);
+      require_once("url_sept_page/$url_sept.php");
+        
+      require_once("url_sept_function.php");
+        
+      $url_html_sept = new url_sept_page(); 
+      $url_sept_function = new url_sept_function($url_sept);
 
- $url_sept_page.= $url_sept_function->sept_progress($_SESSION['info_recrute']['id_recrute'],$url_sept,$db);
- //$url_sept_page.= $url_sept_function->style_background($url_sept);
-   
- $url_sept_page.= '<div class="container-lg shadow-sm rounded bg-light text-light p-2 mb-5" style ="margin-top:100px;  ">';
- $url_sept_page.=  $url_sept_function->html_sept($url_sept,$db);//initialisation du contenu sept 
- 
- $url_sept_page.=  $url_html_sept->url_sept_html($url_sept,$db);// initialition du contenu url_sep_N
- $url_sept_page.=  "</div>";
+      $url_sept_page.= $url_sept_function->sept_progress($_SESSION['info_recrute']['id_recrute'],$url_sept,$db);
+      //$url_sept_page.= $url_sept_function->style_background($url_sept);
+        
+      $url_sept_page.= '<div class="container-lg shadow-sm rounded bg-light text-light p-2 mb-5" style ="margin-top:100px;  ">';
+      $url_sept_page.=  $url_sept_function->html_sept($url_sept,$db);//initialisation du contenu sept 
+      
+      $url_sept_page.=  $url_html_sept->url_sept_html($url_sept,$db);// initialition du contenu url_sep_N
+      $url_sept_page.=  "</div>";
 
- 
- 
 else:
      unset($_SESSION['info_recrute']);
      header("location: http://".$_SERVER['HTTP_HOST']); 
